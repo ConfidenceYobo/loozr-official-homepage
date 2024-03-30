@@ -11,11 +11,11 @@ const jwtToken = localStorage.getItem('jwtToken')
 
 let precachedUser = null;
 if (jwtToken) {
-  const userAccountId = localStorage.getItem('accountId')
-    ? localStorage.getItem('accountId')
+  const accountPrincipal = localStorage.getItem('accountPrincipal')
+    ? localStorage.getItem('accountPrincipal')
     : null;
-  if (userAccountId) {
-    precachedUser = jsonToUser({ account_id: userAccountId, id: parseJwt(jwtToken)['id'] });
+  if (accountPrincipal) {
+    precachedUser = jsonToUser({ account_principal: accountPrincipal, id: parseJwt(jwtToken)['id'] });
   }
 }
 
@@ -46,7 +46,7 @@ const userSlice = createSlice({
   reducers: {
     logout: (state) => {
       localStorage.removeItem('jwtToken')
-      localStorage.removeItem('accountId')
+      localStorage.removeItem('accountPrincipal')
       state.userInfo = null;
       state.jwtToken = null;
     },
@@ -55,7 +55,7 @@ const userSlice = createSlice({
     },
     login: (state, action) => {
       state.userInfo = action.payload;
-      localStorage.setItem("accountId", state.userInfo.accountId);
+      localStorage.setItem("accountPrincipal", state.userInfo.accountPrincipal);
     },
     updateProfile: (state, action) => {
       state.userInfo = action.payload;
@@ -78,7 +78,7 @@ const userSlice = createSlice({
       state.loading = false;
       state.success = true;
       state.userInfo = action.payload;
-      localStorage.setItem("accountId", state.userInfo.accountId);
+      localStorage.setItem("accountPrincipal", state.userInfo.accountPrincipal);
     });
 
     builder.addCase(getUserDetails.rejected, (state, action) => {

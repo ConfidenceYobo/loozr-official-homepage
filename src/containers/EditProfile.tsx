@@ -27,7 +27,7 @@ const EditProfile = () => {
   const { handleUpdateProfile } = useUpdateProfileCallback();
   const { handleUpdateProfilePic } = useUpdateProfilePicCallback();
   const user = useSelector((state: AppState) => state.user.userInfo);
-  const lzrAccountId = `${user.accountId}.${MIXER_ACCOUNT}`;
+  const lzrAccountPrincipal = `${user.accountPrincipal}`;
 
   const back = () => {
     window.history.back()
@@ -143,7 +143,7 @@ const EditProfile = () => {
               alt=""
               width={113}
               height={113}
-              userId={user.accountId}
+              userId={user.accountPrincipal}
               src={!selectedImage ? user?.photo : selectedImage}
               className="rounded-full w-[113px] h-[113px] object-cover"
               style={{ border: "8px solid #141922" }}
@@ -156,7 +156,7 @@ const EditProfile = () => {
         </div>
         <div className=" ml-3 " >
           <p className="text-xl text-white font-semibold mb-2">
-            {lzrAccountId}
+            {lzrAccountPrincipal}
           </p>
           <label className="text-loozr-green cursor-pointer text-small font-medium">
             change profile picture

@@ -15,13 +15,6 @@ export default function RequireAuth({ children }: { children: JSX.Element }) {
   }
 
   if (user) {
-    if (!user.accountId) {
-      return (
-        // <Navigate to="/submit-twitter" state={{ from: location }} replace />
-        <Navigate to="/account-setup" state={{ from: location }} replace />
-      );
-    }
-
     if (user.isArtist && !user.tokenName) {
       return (
         <Navigate
@@ -47,12 +40,6 @@ export function AccountSetupCheckOnly({ children }: { children: JSX.Element }) {
 
   if (jwtToken) {
     if (user) {
-      if (!user.accountId) {
-        return (
-          <Navigate to="/account-setup" state={{ from: location }} replace />
-        );
-      }
-
       if (user.isArtist && !user.tokenName) {
         return (
           <Navigate

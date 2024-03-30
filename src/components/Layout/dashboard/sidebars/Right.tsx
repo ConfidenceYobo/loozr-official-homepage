@@ -28,7 +28,7 @@ export default function Right() {
   const navigate = useNavigate();
 
   const user = useSelector((state: AppState) => state.user.userInfo);
-  const lzrAccountId = `${user?.accountId}.${MIXER_ACCOUNT}`;
+  const lzrAccountPrincipal = `${user?.accountPrincipal}`;
 
   const [balanceInLzr, setLZRBalance] = useState('_');
   const [balanceUsd, setBalanceUSD] = useState('_.__');
@@ -56,7 +56,7 @@ export default function Right() {
 
   const Checking = (item: any) => {
     if (user) {
-      if (user.accountId.length > 16) {
+      if (user.accountPrincipal.length > 16) {
         setIsShown(item);
       } else {
         setIsShown(false);
@@ -67,10 +67,10 @@ export default function Right() {
 
 
   useEffect(() => {
-    const loadLZRBalance = async (accountId: string) => {
+    const loadLZRBalance = async (accountPrincipal: string) => {
       const { handleGetLZRBalanace } = getLZRBalanceCallback();
       try {
-        const result = await handleGetLZRBalanace(accountId);
+        const result = await handleGetLZRBalanace(accountPrincipal);
         const balanceResult = result;
         const balanceBN = getFullDisplayBalance(balanceResult);
 
@@ -81,7 +81,7 @@ export default function Right() {
       }
     };
 
-    loadLZRBalance(lzrAccountId);
+    loadLZRBalance(lzrAccountPrincipal);
   }, []);
 
   return (
@@ -103,7 +103,7 @@ export default function Right() {
                 <Photo
                   alt=""
                   src={user?.photo}
-                  userId={user?.accountId}
+                  userId={user?.accountPrincipal}
                   className="object-cover w-10 h-10 flex justify-center items-center rounded-full  "
                   style={{ border: "3px solid #141922" }}
                 />
@@ -111,19 +111,19 @@ export default function Right() {
               <img src={Verify} alt="" className="absolute bottom-0 right-0 w-4 " />
             </div>
             <div className="hidden xl:block w-full pl-2 ">
-              {user?.accountId && (
+              {user?.accountPrincipal && (
                 <>
                   {isShown ? (
                     <Marquee speed={50} gradient={false}>
                       <p className=" text-xs font-bold text-white name-tag">
-                        {user?.accountId}
+                        {user?.accountPrincipal}
                       </p>
                       <div className="bg-new-100 text-[#F3EC4E] text-medium py-1 px-2 rounded-full text-[10px] w-fit">3.32$LZR</div>
                     </Marquee>
                   ) : (
                     <div className="flex items-center gap-[4px] w-full">
                       <p className=" text-xs font-bold text-white name-tag">
-                        {user?.accountId.slice(0, 16)}
+                        {user?.accountPrincipal.slice(0, 16)}
                       </p>
                       <ExpandMore fontSize='small' />
                           <div className="bg-new-100 text-[#F3EC4E] text-medium py-1 px-2 rounded-full text-[10px] w-fit">3.82$LZR</div>

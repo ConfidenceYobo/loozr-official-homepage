@@ -1,9 +1,9 @@
-import { MIXER_ACCOUNT } from "..";
+
 import { Model } from "../types";
 
 export interface UserJsonProps {
   username?: string;
-  account_id: string;
+  account_principal: string;
   followings_count?: number;
   id: number;
   followers_count?: number;
@@ -21,7 +21,7 @@ export interface UserJsonProps {
 
 export interface UserProps {
   username?: string;
-  accountId?: string;
+  accountPrincipal?: string;
   followingsCount?: number;
   id?: number;
   followersCount?: number;
@@ -40,7 +40,7 @@ export interface UserProps {
 
 export default class User implements Model {
   username: string;
-  accountId: string;
+  accountPrincipal: string;
   followingsCount: number;
   id: number;
   followersCount: number;
@@ -56,9 +56,9 @@ export default class User implements Model {
   email: string;
   photo: any
 
-  constructor({ username, accountId, followingsCount, id, followersCount, tokenName, bio, website, soundCloudLink, twitterLink, instagramLink, spotifyLink, country, isArtist, email, photo }: UserProps) {
+  constructor({ username, accountPrincipal, followingsCount, id, followersCount, tokenName, bio, website, soundCloudLink, twitterLink, instagramLink, spotifyLink, country, isArtist, email, photo }: UserProps) {
     this.username = username;
-    this.accountId = accountId;
+    this.accountPrincipal = accountPrincipal;
     this.followingsCount = followingsCount;
     this.id = id;
     this.followersCount = followersCount;
@@ -80,12 +80,12 @@ export default class User implements Model {
   }
 
   get accountDomain() {
-    return `${this.accountId}.${MIXER_ACCOUNT}`;
+    return `${this.accountPrincipal}`;
   }
 
   fromJson(jsonData: UserJsonProps) {
     this.username = jsonData['username'];
-    this.accountId = jsonData['account_id'];
+    this.accountPrincipal = jsonData['account_principal'];
     this.followingsCount = jsonData['followings_count'];
     this.id = jsonData['id'];
     this.followersCount = jsonData['followers_count'];
@@ -112,7 +112,7 @@ export default class User implements Model {
   toJson() {
     const map = {
       'username': this.username,
-      'account_id': this.accountId,
+      'account_principal': this.accountPrincipal,
       'followings_count': this.followingsCount,
       'id': this.id,
       'followers_count': this.followersCount,

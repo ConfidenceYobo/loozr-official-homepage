@@ -212,7 +212,7 @@ const Profile = (props) => {
     }
   }, [active, currentProfile, coinInfo, user]);
 
-  if (currentProfile && !currentProfile.accountId) {
+  if (currentProfile && !currentProfile.accountPrincipal) {
     return <div className="text-center mb-32">Profile Not Found!</div>;
   }
 
@@ -237,7 +237,7 @@ const Profile = (props) => {
             <div className=" relative md:w-auto w-fit flex md:justify-start justify-start md:mb-0 mb-8 ">
               <Photo
                 alt={currentProfile.accountDomain}
-                userId={currentProfile.accountId}
+                userId={currentProfile.accountPrincipal}
                 src={currentProfile?.photo}
                 className="h-[170px] md:h-[130px] text-4xl w-[170px] md:w-[130px] object-cover rounded-full md:mr-3"
                 style={{ border: "8px solid #141922" }}
@@ -270,7 +270,7 @@ const Profile = (props) => {
                 <span>
                   {currentProfile.username
                     ? currentProfile.username
-                    : currentProfile.accountId}
+                    : currentProfile.accountPrincipal}
                 </span>
                 {currentProfile.isArtist && currentProfile.tokenName ? (
                   <span className="pointer ml-2 pl-2 before:top-[6px]">

@@ -37,7 +37,7 @@ const SendLzr = () => {
 
   const senduser = useSelector((state: any) => state.sendlzr.value ) 
   
-  const lzrAccountId = `${user?.accountId}.${MIXER_ACCOUNT}`;
+  const lzrAccountPrincipal = `${user?.accountPrincipal}`;
   const [showModal, setShowModal] = React.useState(false)
   const [balanceInLzr, setLZRBalance] = useState("0.00");
   const [balanceUsd, setBalanceUSD] = useState("0.00");
@@ -48,10 +48,10 @@ const SendLzr = () => {
   const [name, setName] = React.useState("")
 
   useEffect(() => {
-    const loadLZRBalance = async (accountId: string) => {
+    const loadLZRBalance = async (accountPrincipal: string) => {
       const { handleGetLZRBalanace } = getLZRBalanceCallback();
       try {
-        const result = await handleGetLZRBalanace(accountId);
+        const result = await handleGetLZRBalanace(accountPrincipal);
         const balanceResult = result;
         const balanceBN = getFullDisplayBalance(balanceResult);
 
@@ -62,7 +62,7 @@ const SendLzr = () => {
       }
     };
 
-    loadLZRBalance(lzrAccountId);
+    loadLZRBalance(lzrAccountPrincipal);
   }, []);
 
   const OnchangeAcount = async (item: any)=>{  

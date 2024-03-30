@@ -24,7 +24,7 @@ export default function UpdateProfile() {
     const dispatch = useDispatch();
     const { handleUpdateProfile } = useUpdateProfileCallback();
     const user = useSelector((state: AppState) => state.user.userInfo);
-    const lzrAccountId = `${user.accountId}.${MIXER_ACCOUNT}`;
+    const lzrAccountPrincipal = `${user.accountPrincipal}`;
   
     const profileEditSchema = yup.object({
       username: yup.string().required("Please enter full name").nullable(),
@@ -132,7 +132,7 @@ export default function UpdateProfile() {
                 </div>
                 <div className=" ml-3 " >
                     <p className="text-lg text-white font-semibold ">
-                        {lzrAccountId}
+                        {lzrAccountPrincipal}
                     </p>
                     <label className="text-[#FFCD43] cursor-pointer text-[13px] font-medium">
                         change profile picture

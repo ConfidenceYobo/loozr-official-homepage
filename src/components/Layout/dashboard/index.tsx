@@ -70,7 +70,7 @@ const Dashboard = ({ children }: { children: React.ReactNode }) => {
   const navigate = useNavigate();
 
   const user = useSelector((state: AppState) => state.user.userInfo);
-  const lzrAccountId = `${user?.accountId}.${MIXER_ACCOUNT}`;
+  const lzrAccountPrincipal = `${user?.accountPrincipal}.${MIXER_ACCOUNT}`;
 
   const [balanceInLzr, setLZRBalance] = useState('_');
   const [balanceUsd, setBalanceUSD] = useState('_.__');
@@ -78,10 +78,10 @@ const Dashboard = ({ children }: { children: React.ReactNode }) => {
   const [showMobileModal, setShowMobileModal] = useState(false);
 
   useEffect(() => {
-    const loadLZRBalance = async (accountId: string) => {
+    const loadLZRBalance = async (accountPrincipal: string) => {
       const { handleGetLZRBalanace } = getLZRBalanceCallback();
       try {
-        const result = await handleGetLZRBalanace(accountId);
+        const result = await handleGetLZRBalanace(accountPrincipal);
         const balanceResult = result;
         const balanceBN = getFullDisplayBalance(balanceResult);
 
@@ -92,7 +92,7 @@ const Dashboard = ({ children }: { children: React.ReactNode }) => {
       }
     };
 
-    loadLZRBalance(lzrAccountId);
+    loadLZRBalance(lzrAccountPrincipal);
   }, []);
 
   return (

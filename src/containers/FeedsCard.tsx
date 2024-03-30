@@ -23,7 +23,7 @@ export default function FeedsCard() {
                             <Photo
                                 alt=""
                                 src={user?.photo}
-                                userId={user?.accountId}
+                                userId={user?.accountPrincipal}
                                 className="object-cover w-12 h-12 flex justify-center items-center rounded-full  "
                             />
                         </div>

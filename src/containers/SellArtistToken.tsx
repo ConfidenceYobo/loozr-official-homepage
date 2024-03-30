@@ -31,15 +31,15 @@ const SellArtistToken = () => {
   const [pageLoading, setPageLoadingStatus] = useState(true); 
 
   const user = useSelector((state: AppState) => state.user.userInfo);
-  const lzrAccountId = `${user?.accountId}.${MIXER_ACCOUNT}`;
+  const lzrAccountPrincipal = `${user?.accountPrincipal}.${MIXER_ACCOUNT}`;
   const [balanceInLzr, setLZRBalance] = useState("0.00");
   const [balanceUsd, setBalanceUSD] = useState("0.00");
 
   useEffect(() => {
-    const loadLZRBalance = async (accountId: string) => {
+    const loadLZRBalance = async (accountPrincipal: string) => {
       const { handleGetLZRBalanace } = getLZRBalanceCallback();
       try {
-        const result = await handleGetLZRBalanace(accountId);
+        const result = await handleGetLZRBalanace(accountPrincipal);
         const balanceResult = result;
         const balanceBN = getFullDisplayBalance(balanceResult);
 
@@ -50,7 +50,7 @@ const SellArtistToken = () => {
       }
     };
 
-    loadLZRBalance(lzrAccountId);
+    loadLZRBalance(lzrAccountPrincipal);
   }, []);
 
   const formSchema = yup.object({
@@ -264,7 +264,7 @@ const SellArtistToken = () => {
                   <div className=" flex -mt-1 items-center ">
                     <p className=" text-[13px] font-semibold ">
                       {" "}
-                      {artistDetails?.user.accountId}
+                      {artistDetails?.user.accountPrincipal}
                     </p>
                   </div>
                   <div className=" flex -mt-1 items-center ">

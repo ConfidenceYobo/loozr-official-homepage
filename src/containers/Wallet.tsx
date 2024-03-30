@@ -21,17 +21,17 @@ const Wallet = () => {
   const navigate = useNavigate();
   const [active, setActive] = useState(1);
   const user = useSelector((state: AppState) => state.user.userInfo);
-  const lzrAccountId = `${user.accountId}.${MIXER_ACCOUNT}`;
+  const lzrAccountPrincipal = `${user.accountPrincipal}`;
   const [balanceInLzr, setLZRBalance] = useState("_");
   const [balanceUsd, setBalanceUSD] = useState("_.__");
 
   const [copySuccess, setCopySuccess] = React.useState('');
   
   useEffect(() => {
-    const loadLZRBalance = async (accountId: string) => {
+    const loadLZRBalance = async (accountPrincipal: string) => {
       const { handleGetLZRBalanace } = getLZRBalanceCallback();
       try {
-        const result = await handleGetLZRBalanace(accountId);
+        const result = await handleGetLZRBalanace(accountPrincipal);
         const balanceResult = result;
         const balanceBN = getFullDisplayBalance(balanceResult);
 
@@ -42,7 +42,7 @@ const Wallet = () => {
       }
     };
 
-    loadLZRBalance(lzrAccountId);
+    loadLZRBalance(lzrAccountPrincipal);
   }, []);
 
   function copyToClipboard(item: any, text: any) { 
@@ -143,10 +143,10 @@ const Wallet = () => {
         </div>
         <div className=" flex items-center ">
           <p className="text-white font-medium text-sm md:text-sm">
-            <span className="text-muted">Your domain name:</span> {lzrAccountId}
+            <span className="text-muted">Your domain name:</span> {lzrAccountPrincipal}
           </p>
           <button
-            onClick={() => copyToClipboard(lzrAccountId, "Copied!")}
+            onClick={() => copyToClipboard(lzrAccountPrincipal, "Copied!")}
             className=" w-[30px] ml-2 h-[30px] rounded-full bg-[#141922] flex justify-center items-center mr-2  "
           >
             <img src={copyimg} alt="copy" className=" w-[12.17px] " />

@@ -17,7 +17,6 @@ export default function TxHistoryCard(props: TxHistoryProps) {
   const renderCoinName = (coinName: string) => {
     return <span className="uppercase">{coinName+" "}</span>;
   }; 
-  
 
   return (
     <div className="w-full flex items-center justify-between text-white mb-10 md:mb-6">
@@ -25,7 +24,7 @@ export default function TxHistoryCard(props: TxHistoryProps) {
         <div className=" w-fit ">
           <Photo
             alt=""
-            userId={props.hodler.user.accountId}
+            userId={props.hodler.user.accountPrincipal}
             className="h-12 w-12 rounded-full mr-3"
             style={{ border: "6px solid #141922" }}
           />
@@ -38,7 +37,7 @@ export default function TxHistoryCard(props: TxHistoryProps) {
             <p className="text-[10px] md:text-xs md:w-[200px] font-medium  text-muted">
               {props.hodler.balance ? (
                 <> 
-                  {props.hodler.user.accountId+" "}
+                  {props.hodler.user.accountPrincipal+" "}
                   Owns {props.hodler.balance.balance} $ 
                   {props.txType === TXTYPES[1] ? 
                     <>
@@ -57,7 +56,7 @@ export default function TxHistoryCard(props: TxHistoryProps) {
 
           <div>
             <p className="text-xs md:text-sm font-bold text-white mb-0.5">
-              {props.hodler.user.accountId}
+              {props.hodler.user.accountPrincipal}
             </p>
             <p className="text-[10px] md:text-xs md:w-[200px] font-medium  text-muted">
               {props.hodler.balance ? (

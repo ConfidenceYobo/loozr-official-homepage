@@ -1,7 +1,7 @@
 const env = process.env.NODE_ENV || 'development';
 
 const development = {
-  apiUrl: 'https://api.loozr.io/api',
+  apiUrl: 'http://localhost:8000/api',
   environment: 'development',
   enableAnalytics: false
 };
