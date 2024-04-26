@@ -63,7 +63,7 @@ export default class Artist implements Model {
     this.id = jsonData['id'];
     this.isVerified = jsonData['is_verified'];
     this.approved = jsonData['approved'];
-    this.creatorCoinId = jsonData['creator_coin_id'];
+    this.creatorCoinId = jsonData['artist_principal'];
     this.founderReward = jsonData['founder_reward'];
     this.totalListens = jsonData['total_listens'];
     const user = new User({});

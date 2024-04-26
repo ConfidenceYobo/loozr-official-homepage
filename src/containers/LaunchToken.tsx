@@ -51,7 +51,6 @@ Setting this value too high will discourage buyers from ever purchasing your coi
   //     }));
 
   const formSchema = yup.object({
-    account_id: yup.string().required("Please enter coin name"),
     founder_reward: yup
       .number()
       .max(100, 'Founder reward exceeded 100%')
@@ -60,14 +59,10 @@ Setting this value too high will discourage buyers from ever purchasing your coi
   });
 
   const formik = useFormik({
-    initialValues: { account_id: "", founder_reward: 0 },
+    initialValues: { founder_reward: 0 },
     validationSchema: formSchema,
     onSubmit: () => { },
   });
-
-  useEffect(() => {
-    formik.setFieldValue("account_id", text)
-  }, [text])
 
   const handleLaunchToken = async () => {
     if (!formik.dirty) {
@@ -75,8 +70,6 @@ Setting this value too high will discourage buyers from ever purchasing your coi
     } else if (!formik.isValid) {
       return;
     }
-
-    if (!isAccountAvailable) return;
 
     setLoader(true);
 
@@ -90,7 +83,7 @@ Setting this value too high will discourage buyers from ever purchasing your coi
         ...TOAST_OPTIONS,
         autoClose: 10000,
       });
-      navigate(`/:accountDomain`, { replace: true });
+      navigate(`/${artist.user.id}`, { replace: true });
     } catch (err) {
       setLoader(false);
       toastHttpError(err);
@@ -103,35 +96,7 @@ Setting this value too high will discourage buyers from ever purchasing your coi
         <p className="font-bold md:w-[400px] text-4xl md:text-4xl text-white mb-4 md:mb-4">
           Create Artiste Coin
         </p>
-        <p className="text-sm md:w-[400px] md:text-[15px] mb-7">
-          Launch you own cryptocurrency.
-          <span className="mt-2.5">
-            Enter a custom Artiste Token Symbol that will act as your currency
-            that can be held, traded and exchanged for goods and services.
-          </span>
-        </p>
-        <AccountSetupInputCoin
-          accountDomain={`.${CREATOR_COIN_DOMAIN}`}
-          name="account_id"
-          placeholder="$YOUR_COIN_NAME"
-          value={formik.values.account_id}
-          setResult={(result) => setAvailableState(result)}
-          onChange={formik.handleChange}
-          onBlur={(e) => formik.handleBlur(e)}
-          onFocus={() => formik.setFieldTouched("account_id", true, true)}
-        />
-        <div className="w-full h-auto mt-4 mb-1">
-          {formik.touched.account_id && formik.errors.account_id && (
-            <motion.div
-              initial={{ y: -100, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              className="text-xs font-Inter-SemiBold text-[#F25341]"
-              style={{ marginTop: "-8px" }}
-            >
-              {formik.errors.account_id}
-            </motion.div>
-          )}
-        </div>
+  
         {/* <p className="italic text-sm md:text-base text-muted mb-8 md:mb-5">
           Coin name: {formik.values.account_id}.{CREATOR_COIN_DOMAIN}
         </p> */}
@@ -176,7 +141,7 @@ Setting this value too high will discourage buyers from ever purchasing your coi
         <button
           className=" md:w-[400px] h-[55px] md:h-[60px] text-white disabled:text-muted font-medium md:text-base bg-gradient-ld disabled:bg-dark-800 mb-11 w-full focus:outline-none"
           onClick={handleLaunchToken}
-          disabled={isLoading || !isAccountAvailable}
+          disabled={isLoading}
         >
           {isLoading ? "Reserving username..." : "Reserve Coin Name"}
         </button>

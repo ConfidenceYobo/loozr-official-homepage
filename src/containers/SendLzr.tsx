@@ -22,13 +22,13 @@ const SendLzr = () => {
   const formSchema = yup.object({
     amount: yup
       .string().required("Required"),
-    account_id: yup
+      account_principal: yup
       .string()
-      .required("Enter account id")
+      .required("Enter account principal")
   });
 
   const formik = useFormik({
-    initialValues: { account_id: "", amount: 0 },
+    initialValues: { account_principal: "", amount: 0 },
     validationSchema: formSchema,
     onSubmit: () => {},
   }); 
@@ -94,14 +94,14 @@ const SendLzr = () => {
   };
   
   const ClickHandler =(item: any, index: any)=> {
-    formik.setFieldValue("account_id", index) 
+    formik.setFieldValue("account_principal", index) 
     setName(item)
     setSearchValue("")
   }
 
   React.useEffect(()=> { 
     if(senduser){ 
-      formik.setFieldValue("account_id", senduser)
+      formik.setFieldValue("account_principal", senduser)
       setName(senduser) 
     }
   },[])
@@ -117,7 +117,7 @@ const SendLzr = () => {
           <div className=" w-full md:w-[350px] relative " > 
             <input
               type="text"
-              name="account_id"
+              name="account_principal"
               autoComplete="off"
               disabled={senduser? true:false}
               value={senduser? senduser:name}
@@ -132,7 +132,7 @@ const SendLzr = () => {
               <div className=" absolute bg-[#12161F] top-[61px] overflow-y-auto max-h-[250px] z-[120] py-2 mt-2 rounded-lg px-4 w-full  " > 
                 {data.map((item: any, index: any) => { 
 
-                  const domainName = item.account_id+"."+MIXER_ACCOUNT
+                  const domainName = item.account_principal
 
                   return(
                     <div key={index} onClick={() => ClickHandler(domainName, domainName)} className=' w-full cursor-pointer flex my-3 items-center ' > 
@@ -144,7 +144,7 @@ const SendLzr = () => {
                       {/* <div className=' w-10 h-10 rounded-full bg-red-600 border-[3px] border-[#222A3B] ' /> */}
                       <div className=' ml-3 ' >
                         <div className=' flex -mt-1 items-center ' >
-                          <p className=' text-[13px] font-semibold ' > {item?.account_id}</p>
+                          <p className=' text-[13px] font-semibold ' > {item?.username}</p>
                         </div>
                         <div className=' flex -mt-1 items-center ' >
                           <p className=' text-[11px] font-semibold text-[#536079] ' >{domainName.slice(0, 40)}</p> 
@@ -160,18 +160,18 @@ const SendLzr = () => {
             )}
           </div>  
           <p className="helper-text">
-            Example account id is <strong>example.{MIXER_ACCOUNT}</strong>
+            Example account principal is <strong>example.{MIXER_ACCOUNT}</strong>
           </p>
         </div>
         <div className="w-full h-auto pt-2">
-          {formik.touched.account_id && formik.errors.account_id && (
+          {formik.touched.account_principal && formik.errors.account_principal && (
             <motion.div
               initial={{ y: -100, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               className="text-xs font-Inter-SemiBold text-[#F25341]"
               style={{ marginTop: "-42px" }}
             >
-              {formik.errors.account_id}
+              {formik.errors.account_principal}
             </motion.div>
           )}
         </div>

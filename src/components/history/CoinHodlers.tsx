@@ -52,7 +52,7 @@ export default function CoinHodlers({ coin, user }: { coin: User; user: User }) 
         nextCursor={pagination.nextCursor}
         onSetCurrentCursor={() => dispatch(changePageForCoinHodlers())}
       >
-        <RenderTxHistory coin={coin.tokenName} />
+        <RenderTxHistory coin={coin.username} />
       </Pagination>
     </>
   );

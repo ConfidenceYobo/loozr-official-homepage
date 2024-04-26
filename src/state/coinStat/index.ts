@@ -68,8 +68,8 @@ const artistSlice = createSlice({
             balance: formatNumber(Number(piceInLzr), 2, 6),
             balanceUSD: priceInUSD,
           },
-          coinId: res['coin'],
-          coin: res['coin_name']
+          coinId: res['coin']['creator']['id'],
+          coin: res['coin']['creator']['username']
         };
       });
 

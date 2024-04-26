@@ -70,7 +70,7 @@ const Dashboard = ({ children }: { children: React.ReactNode }) => {
   const navigate = useNavigate();
 
   const user = useSelector((state: AppState) => state.user.userInfo);
-  const lzrAccountPrincipal = `${user?.accountPrincipal}.${MIXER_ACCOUNT}`;
+  const lzrAccountPrincipal = `${user?.accountPrincipal}`;
 
   const [balanceInLzr, setLZRBalance] = useState('_');
   const [balanceUsd, setBalanceUSD] = useState('_.__');

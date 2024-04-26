@@ -46,10 +46,10 @@ export function useBecomeArtisteCallback() {
 }
 
 export function useArtisteSetupCallback() {
-  const handleArtisteSetup = async ({account_id, founder_reward}: {account_id: string, founder_reward: number}): Promise<any> => {
+  const handleArtisteSetup = async ({founder_reward}: {founder_reward: number}): Promise<any> => {
     founder_reward = founder_reward * 100;
     const httpClient = new HttpClient();
-    const result = await httpClient.axiosInstance.post(`/artistes/artist-setup`, { creator_coin_id: account_id, founder_reward });
+    const result = await httpClient.axiosInstance.post(`/artistes/artist-setup`, { founder_reward });
     return result.data;
   }
   return { handleArtisteSetup }

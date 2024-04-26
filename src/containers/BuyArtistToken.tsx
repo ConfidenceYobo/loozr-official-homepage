@@ -26,7 +26,7 @@ const BuyArtistToken = () => {
   const { handleGetArtists } = useGetArtistDetailsCallback();
 
   const user = useSelector((state: AppState) => state.user.userInfo);
-  const lzrAccountPrincipal = `${user?.accountPrincipal}.${MIXER_ACCOUNT}`;
+  const lzrAccountPrincipal = `${user?.accountPrincipal}`;
   const [balanceInLzr, setLZRBalance] = useState("0.00");
   const [balanceUsd, setBalanceUSD] = useState("0.00");
   const [showModal, setShowModal] = React.useState(false)
@@ -128,12 +128,12 @@ const BuyArtistToken = () => {
           <p className="text-lg md:text-xl font-medium text-muted">
             You exchanged {formik.values.amount} LZR for{" "}
             <strong className=" font-extrabold uppercase">
-              ${artistDetails.creatorCoinId}
+              ${artistDetails.user?.username}
             </strong>{" "}
             coin
           </p>
           <Link
-            to={"/" + artistDetails.accountDomain}
+            to={"/" + artistDetails.user.id}
             className="mt-2 text-loozr-purple"
           >
             Continue
@@ -144,7 +144,7 @@ const BuyArtistToken = () => {
   ) : (
     <div className="w-full mt-16 md:px-0 px-6  md:mt-0">
       <p className="text-white text-2xl font-semibold mb-12">
-        Buy $<span className=" uppercase ">{artistDetails.creatorCoinId}</span>{" "}
+        Buy $<span className=" uppercase ">{artistDetails.user?.username}</span>{" "}
         Artiste Token
       </p>
       <div className="md:w-[350px] w-full ">
@@ -159,13 +159,13 @@ const BuyArtistToken = () => {
             />
           </div>
           <h3 className="font-semibold uppercase helper-text">
-            ${artistDetails.creatorCoinId}
+            ${artistDetails.user?.username}
           </h3>
         </div>
         <div className="w-full mb-8">
           <p className="text-sm font-medium text-muted mb-5">
             Amount of LZR to exchange for $
-            <span className=" uppercase ">{artistDetails.creatorCoinId}</span>:
+            <span className=" uppercase ">{artistDetails.user?.username}</span>:
           </p>
           <input
             type="number"
@@ -259,7 +259,7 @@ const BuyArtistToken = () => {
                 </span>{" "}
                 for{" "}
                 <span className=" uppercase ">
-                  ${artistDetails.creatorCoinId}{" "}
+                  ${artistDetails.user?.username}{" "}
                 </span>{" "}
                 coins:
               </p>
@@ -279,7 +279,7 @@ const BuyArtistToken = () => {
                   </div>
                   <div className=" flex -mt-1 items-center ">
                     <p className=" text-[11px] font-semibold text-[#536079] ">
-                      {artistDetails?.user.tokenName} - Artist
+                      {artistDetails?.user.tokenName ?? artistDetails.user?.username} - Artist
                     </p>
                   </div>
                 </div>

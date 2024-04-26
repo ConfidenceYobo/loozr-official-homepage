@@ -237,7 +237,7 @@ const Profile = (props) => {
             <div className=" relative md:w-auto w-fit flex md:justify-start justify-start md:mb-0 mb-8 ">
               <Photo
                 alt={currentProfile.accountDomain}
-                userId={currentProfile.accountPrincipal}
+                userId={currentProfile.username ?? currentProfile.accountPrincipal}
                 src={currentProfile?.photo}
                 className="h-[170px] md:h-[130px] text-4xl w-[170px] md:w-[130px] object-cover rounded-full md:mr-3"
                 style={{ border: "8px solid #141922" }}
@@ -268,9 +268,7 @@ const Profile = (props) => {
               </div>
               <p className="text-muted font-medium mt-[2px] text-xs md:text-xs">
                 <span>
-                  {currentProfile.username
-                    ? currentProfile.username
-                    : currentProfile.accountPrincipal}
+                  {currentProfile.username ?? currentProfile.accountPrincipal}
                 </span>
                 {currentProfile.isArtist && currentProfile.tokenName ? (
                   <span className="pointer ml-2 pl-2 before:top-[6px]">
@@ -334,22 +332,22 @@ const Profile = (props) => {
                   />
                   {isShown && (
                     <div className=" absolute w-[200px] bg-[#12161F] z-20 top-7 px-4 py-3 rounded-lg  shadow-xl ">
-                      <a
+                      {currentProfile.isArtist && currentProfile.tokenName ? (<a
                         target="_blank"
                         rel="noreferrer"
                         href={
-                          "https://explorer.testnet.near.org/accounts/" +
-                          currentProfile.accountDomain
+                          "https://icscan.io/canister/" +
+                          currentProfile.tokenName
                         }
                         className="font-medium text-[13px] cursor-pointer  "
                       >
                         View user on explorer
-                      </a>
-                      {currentProfile.isArtist && currentProfile.tokenName && (
+                      </a>): null}
+                      {currentProfile.isArtist && currentProfile.tokenName ? (
                         <p className=" font-medium text-[13px] cursor-pointer mt-1  ">
                           View artist on explorer
                         </p>
-                      )}
+                      ): null}
                       <p
                         onClick={() =>
                           copyToClipboard(window.location.href, "Copied")

@@ -11,7 +11,7 @@ import Artist from "../config/constants/models/artist";
 import { jsonToArtist } from "../utils";
 import { toastHttpError } from "../utils/httpHelper";
 import Photo from "../components/Photo";
-import { LZR_IN_USD, MIXER_ACCOUNT } from "../config/constants";
+import { LZR_IN_USD } from "../config/constants";
 import { getLZRBalanceCallback } from "../state/wallet/hooks/fetchBalance";
 import { useSelector } from "react-redux";
 import { AppState } from "../state/store";
@@ -31,7 +31,7 @@ const SellArtistToken = () => {
   const [pageLoading, setPageLoadingStatus] = useState(true); 
 
   const user = useSelector((state: AppState) => state.user.userInfo);
-  const lzrAccountPrincipal = `${user?.accountPrincipal}.${MIXER_ACCOUNT}`;
+  const lzrAccountPrincipal = `${user?.accountPrincipal}`;
   const [balanceInLzr, setLZRBalance] = useState("0.00");
   const [balanceUsd, setBalanceUSD] = useState("0.00");
 
@@ -125,7 +125,7 @@ const SellArtistToken = () => {
           <p className="text-lg md:text-xl font-medium text-muted">
             You exchanged {formik.values.amount}{" "}
             <strong className="uppercase">
-              ${artistDetails.creatorCoinId}
+              ${artistDetails.user?.username}
             </strong>{" "}
             for LZR
           </p>
@@ -152,13 +152,13 @@ const SellArtistToken = () => {
             />
           </div>
           <h3 className="font-semibold uppercase helper-text">
-            ${artistDetails.creatorCoinId}
+            ${artistDetails.user?.username}
           </h3>
         </div>
         <div className="w-full mb-8">
           <p className="text-sm font-medium text-muted mb-5">
             Amount of{" "}
-            <span className="uppercase">${artistDetails.creatorCoinId}</span> to
+            <span className="uppercase">${artistDetails.user?.username}</span> to
             exchange for LZR:
           </p>
           <input
@@ -264,12 +264,12 @@ const SellArtistToken = () => {
                   <div className=" flex -mt-1 items-center ">
                     <p className=" text-[13px] font-semibold ">
                       {" "}
-                      {artistDetails?.user.accountPrincipal}
+                      {artistDetails.user?.username}
                     </p>
                   </div>
                   <div className=" flex -mt-1 items-center ">
                     <p className=" text-[11px] font-semibold text-[#536079] ">
-                      {artistDetails?.user.tokenName} - Artist
+                      {artistDetails?.user.tokenName ?? artistDetails.user?.username} - Artist
                     </p>
                   </div>
                 </div>

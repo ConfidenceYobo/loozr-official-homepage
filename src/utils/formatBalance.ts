@@ -2,15 +2,15 @@ import BigNumber from "bignumber.js";
 import { LZR_IN_USD } from "../config/constants";
 import { BIG_TEN } from "./bigNumber";
 
-export const getBalanceAmount = (amount: string | BigNumber, decimals = 24) => {
+export const getBalanceAmount = (amount: string | BigNumber, decimals = 18) => {
   return new BigNumber(amount).dividedBy(BIG_TEN.pow(decimals))
 }
 
-export const getDecimalAmount = (amount: BigNumber, decimals = 24) => {
+export const getDecimalAmount = (amount: BigNumber, decimals = 18) => {
   return new BigNumber(amount).times(BIG_TEN.pow(decimals))
 }
 
-export const getFullDisplayBalance = (balance: string | BigNumber, decimals = 24, displayDecimals?: number): string => {
+export const getFullDisplayBalance = (balance: string | BigNumber, decimals = 18, displayDecimals?: number): string => {
   return getBalanceAmount(balance, decimals).toFixed(displayDecimals)
 }
 

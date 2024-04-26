@@ -42,9 +42,12 @@ export default function CoinBought({ user }: { user: User }) {
 
   useEffect(() => {
     let coinsList = '';
-    coins.forEach(async (coin) => {
+    coins.forEach(async (coin, i) => {
       if(Number(coin.balance.balanceUSD) > 0) return;
-      coinsList += coin.coinId + ',';
+      if (i > 0) {
+        coinsList += ','
+      }
+      coinsList += coin.coinId;
     });
     if(coinsList.length > 0) {
       dispatch(loadCoinsBoughtInfo(coinsList));

@@ -54,7 +54,7 @@ const ArtisteDashboard = () => {
         >
           <div className="flex ">
             {artists.map((_, i) => (
-              <div key={i} onMouseOver={() => Checking(i, _.creatorCoinId)} onMouseOut={() => Checking(-1, _.creatorCoinId)} className="flex flex-col items-center mr-[22px] md:h-fit min-w-max md:w-[105px]" >
+              <div key={i} onMouseOver={() => Checking(i, _.user.username)} onMouseOut={() => Checking(-1, _.user.username)} className="flex flex-col items-center mr-[22px] md:h-fit min-w-max md:w-[105px]" >
                 <Link to={`/${_.user.accountDomain}`} className="relative">
                   <div className=" relative ">
                     <Photo alt="" userId={_.user.accountPrincipal} className="object-cover h-[100px] text-4xl md:h-[105px] flex justify-center items-center w-[100px] md:w-[105px] rounded-full  mb-[16px]"
@@ -70,8 +70,8 @@ const ArtisteDashboard = () => {
                   <div className={isShownText === i ? "example1" : " h-[20px] w-full flex justify-center "}>
                     <p onClick={() => navigate(`/${_.user.accountDomain}`)} className=" cursor-pointer mb-[3px] font-medium text-sm text-white" >
                       $ {isShownText === i
-                        ? _.creatorCoinId.toUpperCase()
-                        : _.creatorCoinId.slice(0, 7).toUpperCase()}
+                        ? _.user.username.toUpperCase()
+                        : _.user.username.slice(0, 7).toUpperCase()}
                     </p>
                   </div>
                 </div>
