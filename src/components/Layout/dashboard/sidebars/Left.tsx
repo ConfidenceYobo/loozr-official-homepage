@@ -6,7 +6,7 @@ import Feeds from "../../../../assets/svg/Feeds";
 import Artist from "../../../../assets/svg/Artist";
 import Wallet from "../../../../assets/svg/Wallet";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-
+import { toastHttpError } from "../../../../utils/httpHelper";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { AppState } from "../../../../state/store";
 import { toast } from "react-toastify";
@@ -69,6 +69,7 @@ export const Left = () => {
       await handleBecomeArtiste({});
       window.location.reload();
     } catch (err) {
+      toastHttpError(err);
       dispatch(setPageLoaderStatus(false));
     }
   };
@@ -79,10 +80,11 @@ export const Left = () => {
     setShowMusicModal(false);
   };
 
-
   return (
-    <div className={`bg-dark-900 flex flex-col items-start h-screen md:pl-20 xl:pl-[150px] pr-auto md:pr-6 xl:pr-6 pt-8 pb-12 mb-5`}
-      style={{ width: xl ? `${drawerMaxWidth}vw` : md ? "max-content" : 0, }}>
+    <div
+      className={`bg-dark-900 flex flex-col items-start h-screen md:pl-20 xl:pl-[150px] pr-auto md:pr-6 xl:pr-6 pt-8 pb-12 mb-5`}
+      style={{ width: xl ? `${drawerMaxWidth}vw` : md ? "max-content" : 0 }}
+    >
       {xl ? (
         <img src={LoozrBeta} alt="" className={`w-28 mb-7`} />
       ) : (
@@ -91,7 +93,10 @@ export const Left = () => {
       {user && (
         <>
           {user?.isArtist && (
-            <button onClick={() => setShowMusicModal((prev) => !prev)} className="hidden xl:block text-[6px] py-2.5 px-4 font-medium rounded-full bg-s-gradient mb-6 " >
+            <button
+              onClick={() => setShowMusicModal((prev) => !prev)}
+              className="hidden xl:block text-[6px] py-2.5 px-4 font-medium rounded-full bg-s-gradient mb-6 "
+            >
               <span className="text-xs">Upload tracks</span>
             </button>
           )}
@@ -99,10 +104,27 @@ export const Left = () => {
       )}
       <div className="w-[85%] xl:h-[85%] flex flex-col items-end justify-center xl:block  overflow-y-auto overflow-x-hidden">
         {tabs.map((tab: any) => (
-          <Link className={`${tab.label === 'Wallet' && 'pt-6 border-t-[1px] border-[#141922]'} hover:flex flex items-center text-[14px] font-medium relative text-[#536079] mt-2.5 xl:mt-auto mb-[22px]`} to={tab.path || "#!"} key={tab.label} onClick={() => tab.path ? null : toast.info("Coming soon!", TOAST_OPTIONS)}>
-            <tab.icon className={`object-contain w-4 xl:w-4 h-4 xl:h-4 mr-3 xl:mr-4 ${tab.path === pathname ? "text-white" : "text-[#536079]"}`} />
+          <Link
+            className={`${
+              tab.label === "Wallet" && "pt-6 border-t-[1px] border-[#141922]"
+            } hover:flex flex items-center text-[14px] font-medium relative text-[#536079] mt-2.5 xl:mt-auto mb-[22px]`}
+            to={tab.path || "#!"}
+            key={tab.label}
+            onClick={() =>
+              tab.path ? null : toast.info("Coming soon!", TOAST_OPTIONS)
+            }
+          >
+            <tab.icon
+              className={`object-contain w-4 xl:w-4 h-4 xl:h-4 mr-3 xl:mr-4 ${
+                tab.path === pathname ? "text-white" : "text-[#536079]"
+              }`}
+            />
 
-            <span className={`${tab.path === pathname && "font-bold text-[14px] text-white"} cursor-pointer hidden xl:inline`}>
+            <span
+              className={`${
+                tab.path === pathname && "font-bold text-[14px] text-white"
+              } cursor-pointer hidden xl:inline`}
+            >
               {tab.label}
             </span>
 
@@ -186,6 +208,14 @@ export const Left = () => {
           </div>
         </div>
       )}
+      {!user?.isArtist ? (
+        <div
+          onClick={() => becomeArtist()}
+          className=" h-[50px] flex justify-center items-center text-white disabled:text-muted font-medium md:text-[13px] bg-gradient-ld disabled:bg-dark-800 mb-11 w-full"
+        >
+          Become an Artist
+        </div>
+      ) : null}
 
       {showMusicModal && (
         <div className=" fixed inset-0 flex justify-center items-center md:overflow-y-hidden bg-black bg-opacity-90 z-[70] ">

@@ -143,7 +143,7 @@ const Wallet = () => {
         </div>
         <div className=" flex items-center ">
           <p className="text-white font-medium text-sm md:text-sm">
-            <span className="text-muted">Your domain name:</span> {lzrAccountPrincipal}
+            <span className="text-muted">Your principal:</span> {lzrAccountPrincipal}
           </p>
           <button
             onClick={() => copyToClipboard(lzrAccountPrincipal, "Copied!")}

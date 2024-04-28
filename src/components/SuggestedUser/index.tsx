@@ -36,7 +36,7 @@ const SuggestUsersTable = (props) => {
 
                 <Photo
                   alt=""
-                  userId={user.accountId}
+                  userId={user.username ?? user.accountId}
                   src={user?.photo}
                   className="object-contain w-10 h-10 flex justify-center items-center rounded-full "
                   style={{ border: "3px solid #141922" }}
@@ -57,7 +57,7 @@ const SuggestUsersTable = (props) => {
                 <div className=" flex -mt-1 items-center ">
                   <p className=" text-[13px] font-semibold ">
                     {" "}
-                    {user.accountId}
+                    {user.username}
                   </p>
                 </div>
                 <div className=" flex -mt-1 items-center ">

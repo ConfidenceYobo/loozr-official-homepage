@@ -103,7 +103,7 @@ export default function Right() {
                 <Photo
                   alt=""
                   src={user?.photo}
-                  userId={user?.accountPrincipal}
+                  userId={user.username ?? user?.accountPrincipal}
                   className="object-cover w-10 h-10 flex justify-center items-center rounded-full  "
                   style={{ border: "3px solid #141922" }}
                 />
@@ -145,7 +145,7 @@ export default function Right() {
                       </div>
                     </div>
                       <div className="p-3 bg-dark-700" style={{ borderTop: "2px solid rgba(83, 96, 121, 0.2)" }} onClick={() => (user ? navigate("/" + user.accountDomain) : null)} >View my profile</div>
-                      <div className="p-3 bg-dark-700" style={{ borderTop: "2px solid rgba(83, 96, 121, 0.2)" }}>Edit profile</div>
+                      <div className="p-3 bg-dark-700" style={{ borderTop: "2px solid rgba(83, 96, 121, 0.2)" }} onClick={() => (user ? navigate("/profile/edit") : null)}>Edit profile</div>
                       <div className="p-3 bg-dark-700" style={{ borderTop: "2px solid rgba(83, 96, 121, 0.2)" }}>My wallet</div>
                       <div className="p-3 bg-dark-700" style={{ borderTop: "2px solid rgba(83, 96, 121, 0.2)" }}>Log out</div>
                   </div>

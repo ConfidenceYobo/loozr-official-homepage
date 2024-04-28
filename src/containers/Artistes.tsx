@@ -33,15 +33,15 @@ const ArtisteRenderer = (props) => {
         {props.dataList.map((_, i) => (
           <div
             key={i}
-            onMouseOver={() => Checking(i, _.creatorCoinId)}
-            onMouseOut={() => Checking(-1, _.creatorCoinId)}
+            onMouseOver={() => Checking(i, _.user.username ?? _.creatorCoinId)}
+            onMouseOut={() => Checking(-1, _.user.username ?? _.creatorCoinId)}
             className="flex flex-col items-center mr-4 min-w-full md:min-w-[140px]"
           >
             <Link to={`/${_.user.accountDomain}`} className="relative">
               <Photo
               // photoColor={_.user.profileColor}(`/${_.user.accountDomain}`)}
                 alt=""
-                userId={_.user.accountId}
+                userId={_.user.username ?? _.user.accountId}
                 className="object-cover text-4xl flex justify-center items-center h-[100px] md:h-[105px] w-[100px] md:w-[105px] rounded-full mb-[16px]"
                 style={{
                   border: "10px solid #141922",
@@ -70,8 +70,8 @@ const ArtisteRenderer = (props) => {
                 >
                   $
                   {isShownText === i
-                    ? _.creatorCoinId.toUpperCase()
-                    : _.creatorCoinId.slice(0, 7).toUpperCase()}
+                    ? _.user.username.toUpperCase()
+                    : _.user.username.slice(0, 7).toUpperCase()}
                 </p>
               </div>
             </div>

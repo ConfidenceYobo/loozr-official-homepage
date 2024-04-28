@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import Player from "./components/song/Player/Player";
 import Footer from "./components/Footer";
-import WaitlistModal from "./components/WaitlistModal";
+// import WaitlistModal from "./components/WaitlistModal";
 import AppLayout from "./components/Layout/App";
 import { authRoutes, dashboard, dashboardhome, routes } from "./router/routes";
 import Dashboard from "./components/Layout/dashboard";
@@ -56,10 +56,8 @@ const App = () => {
         <div className="mouse-cursor cursor-inner"></div>
 
         <div className="dialog-off-canvas-main-canvas" data-off-canvas-main-canvas >
-          <WaitlistModal />
-          {isModal === true ? (
-            <NFTModal setIsModal={setIsModal} />
-          ) : (
+          {/* <WaitlistModal /> */}
+          
             <>
               <Routes>
                 {authRoutes.map((route) => (
@@ -121,7 +119,6 @@ const App = () => {
                 Go to playing element
               </a>
             </>
-          )}
         </div>
       </Router>
     </>

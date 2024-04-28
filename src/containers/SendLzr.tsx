@@ -112,7 +112,7 @@ const SendLzr = () => {
       <div className="flex flex-col items-center justify-center md:justify-start md:items-start md:max-w-[490px]">
         <div className=" md:w-[350px] w-full mb-8">
           <p className="text-sm font-medium text-muted mb-5">
-            Enter account_id to send LZR to:
+            Enter account principal to send LZR to:
           </p>
           <div className=" w-full md:w-[350px] relative " > 
             <input
@@ -160,7 +160,7 @@ const SendLzr = () => {
             )}
           </div>  
           <p className="helper-text">
-            Example account principal is <strong>example.{MIXER_ACCOUNT}</strong>
+            Example account principal is <strong>ngu-jjuyti-abcd-efgh-xyz</strong>
           </p>
         </div>
         <div className="w-full h-auto pt-2">

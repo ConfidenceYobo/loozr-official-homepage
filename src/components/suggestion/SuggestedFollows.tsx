@@ -33,7 +33,7 @@ const SuggestedFollows = (props: any) => {
         <div className=" relative " >
           <Photo
             alt=""
-            userId={user.accountId}
+            userId={user.username ?? user.accountId}
             src={user?.photo}
             className="object-contain flex justify-center items-center w-10 h-10 rounded-full "
             style={{ border: "3px solid #141922" }}
@@ -49,7 +49,7 @@ const SuggestedFollows = (props: any) => {
         </div>
         <div onClick={() => navigate(`/${user.accountDomain}`)}>
           <div className=' flex -mt-1 items-center ' >
-            <p className=' text-[13px] font-semibold ' > {user.accountId}</p>
+            <p className=' text-[13px] font-semibold ' > {user.username ?? user.accountId}</p>
           </div>
           <div className=' flex -mt-1 items-center ' >
             <p className=' text-[11px] font-semibold text-[#536079] ' >{user.accountType}</p>
