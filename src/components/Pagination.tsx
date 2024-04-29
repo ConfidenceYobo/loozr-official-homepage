@@ -37,6 +37,7 @@ const Pagination = ({
 
   const childrenWithProps = React.Children.map(children, (child) => {
     if (React.isValidElement(child)) {
+      // @ts-ignore
       return React.cloneElement(child, { onScroll, listInnerRef, dataList });
     }
     return child;
