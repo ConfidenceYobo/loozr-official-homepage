@@ -208,7 +208,7 @@ export const Left = () => {
           </div>
         </div>
       )}
-      {!user?.isArtist ? (
+      {user && !user?.isArtist ? (
         <div
           onClick={() => becomeArtist()}
           className=" h-[50px] flex justify-center items-center text-white disabled:text-muted font-medium md:text-[13px] bg-gradient-ld disabled:bg-dark-800 mb-11 w-full"

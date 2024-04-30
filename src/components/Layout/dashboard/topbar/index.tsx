@@ -158,7 +158,7 @@ export const TopBar = () => {
             width={17}
             height={17}
           /> */}
-          {!user?.isArtist ? (
+          {user && !user?.isArtist ? (
             <img
               src={PlusIcon}
               onClick={becomeArtist}
