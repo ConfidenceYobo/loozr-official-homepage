@@ -98,7 +98,7 @@ export default function Header() {
                     <span>Learn more</span>
                   </a>
                   <a
-                    href="https://testnet.loozr.io/feeds"
+                    href="/feeds"
                     className="button btn-primary btn-lit !flex justify-center items-center"
                   >
                   Join Testnet
