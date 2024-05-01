@@ -336,7 +336,7 @@ const Profile = (props) => {
                         target="_blank"
                         rel="noreferrer"
                         href={
-                          "https://dashboard.internetcomputer.org/canister/" +
+                          "https://ic.house/token/" +
                           currentProfile.tokenName
                         }
                         className="font-medium text-[13px] cursor-pointer  "
