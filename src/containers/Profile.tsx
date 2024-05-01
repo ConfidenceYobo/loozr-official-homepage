@@ -254,11 +254,11 @@ const Profile = (props) => {
             <div className="md:ml-10">
               <div className=" flex ">
                 <p className="text-[17px] md:text-xl font-medium text-white mb-1.5">
-                  {currentProfile.accountDomain}
+                  {currentProfile.tokenName ?? currentProfile.accountDomain}
                 </p>
                 <button
                   onClick={() =>
-                    copyToClipboard(currentProfile.accountDomain, "Copied!")
+                    copyToClipboard(currentProfile.tokenName ?? currentProfile.accountDomain, "Copied!")
                   }
                   className=" w-[30px] ml-2 h-[30px] rounded-full bg-[#141922] flex justify-center items-center mr-2  "
                 >
