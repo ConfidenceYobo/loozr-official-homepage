@@ -336,18 +336,13 @@ const Profile = (props) => {
                         target="_blank"
                         rel="noreferrer"
                         href={
-                          "https://icscan.io/canister/" +
+                          "https://dashboard.internetcomputer.org/canister/" +
                           currentProfile.tokenName
                         }
                         className="font-medium text-[13px] cursor-pointer  "
                       >
-                        View user on explorer
+                        View artist on explorer
                       </a>): null}
-                      {currentProfile.isArtist && currentProfile.tokenName ? (
-                        <p className=" font-medium text-[13px] cursor-pointer mt-1  ">
-                          View artist on explorer
-                        </p>
-                      ): null}
                       <p
                         onClick={() =>
                           copyToClipboard(window.location.href, "Copied")
