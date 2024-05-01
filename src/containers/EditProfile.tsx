@@ -85,6 +85,9 @@ const EditProfile = () => {
       setLoading(false);
       dispatch(updateProfile(user));
       toast.success("Profile updated!", TOAST_OPTIONS);
+      setTimeout(() => {
+        window.location.reload();
+      }, 3000);
     } catch (err: any) {
       setLoading(false);
       toastHttpError(err);
