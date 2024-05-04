@@ -58,7 +58,7 @@ export default function CreatorStatCard({ user }: { user: User }) {
            Artist Coin Name
           </p>
           <p className="font-extrabold text-[22px] md:text-3xl text-white mb-6">
-            ${user.tokenName}
+            ${user.username}
           </p>
           <div className="flex items-center justify-between mb-6 md:mb-auto">
             <div className="flex flex-col gap-1 items-left md:text-left">

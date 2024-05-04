@@ -345,6 +345,16 @@ const Profile = (props) => {
                       </a>): null}
                       <p
                         onClick={() =>
+                          copyToClipboard(currentProfile.tokenName, "Copied")
+                        }
+                        className=" font-medium text-[13px] mt-1 cursor-pointer  "
+                      >
+                        {copySuccess === "Copied"
+                          ? copySuccess
+                          : "Copy Canister ID"}
+                      </p>
+                      <p
+                        onClick={() =>
                           copyToClipboard(window.location.href, "Copied")
                         }
                         className=" font-medium text-[13px] mt-1 cursor-pointer  "
