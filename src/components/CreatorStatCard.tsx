@@ -55,7 +55,7 @@ export default function CreatorStatCard({ user }: { user: User }) {
       <div className="grid grid-cols-1 md:flex">
         <div className="flex-1">
           <p className="font-medium text-xs text-muted mb-2 md:mb-[22px]">
-           Artist Canister
+           Artist Coin Name
           </p>
           <p className="font-extrabold text-[22px] md:text-3xl text-white mb-6">
             ${user.tokenName}
