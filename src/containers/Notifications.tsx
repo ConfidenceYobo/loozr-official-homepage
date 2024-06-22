@@ -29,9 +29,8 @@ const NotificationContent = (props) => {
       case "RECEIPT":
         return (
           <div
-            className={`rounded-full h-9 w-9 ${
-              !read ? "bg-loozr-purple" : "bg-dark-700"
-            } flex items-center justify-center`}
+            className={`rounded-full h-9 w-9 ${!read ? "bg-loozr-purple" : "bg-dark-700"
+              } flex items-center flex-shrink-0 justify-center`}
           >
             <img src={Arrow225Deg} alt="" className="object-cover w-3 h-4" />
           </div>
@@ -39,9 +38,8 @@ const NotificationContent = (props) => {
       case "COINS_BOUGHT":
         return (
           <div
-            className={`rounded-full h-9 w-9 ${
-              !read ? "bg-loozr-purple" : "bg-dark-700"
-            } flex items-center justify-center`}
+            className={`rounded-full h-9 w-9 ${!read ? "bg-loozr-purple" : "bg-dark-700"
+              } flex items-center flex-shrink-0 justify-center`}
           >
             <img src={Arrow225Deg} alt="" className="object-cover w-3 h-4" />
           </div>
@@ -49,10 +47,10 @@ const NotificationContent = (props) => {
       case "FOLLOW":
         return (
           <Photo
-              alt={notification.sender.accountDomain}
-              className="h-9 w-9 object-cover rounded-full md:mr-3"
-              style={{ border: "6px solid #141922" }}
-            />
+            alt={notification.sender.accountDomain}
+            className="h-10 w-10 flex flex-shrink-0 object-cover rounded-full md:mr-3"
+            style={{ border: "6px solid #141922" }}
+          />
         );
     }
   };
@@ -64,9 +62,9 @@ const NotificationContent = (props) => {
       style={{ height: "100vh", overflowY: "auto" }}
     >
       {props.dataList.map((notification: NotificationAlert, index) => (
-        <div key={index} className="flex items-center mb-9">
+        <div key={index} className="flex items-center mb-6">
           {!notification.readReceipt && (
-            <div className="h-3 w-3 bg-loozr-green rounded-full mr-7" />
+            <div className="!w-3 !h-3 flex flex-shrink-0 bg-loozr-green rounded-full mr-4" />
           )}
           {renderNotificationIcon(
             notification.reason,
@@ -97,8 +95,8 @@ const Notifications = () => {
   );
 
   return (
-    <div className="w-full">
-      <div className="flex items-center cursor-pointer mb-12">
+    <div className="w-full px-4 mt-4">
+      <div className="flex items-center cursor-pointer mb-8">
         <img src={Filter} alt="" className="w-[18px] h-[16px] mr-6" />
         <p className="text-sm md:text-base text-muted font-medium mr-3">
           Filter notifications

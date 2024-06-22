@@ -8,6 +8,7 @@ import { getArtists } from "../state/artist/actions";
 import Photo from "../components/Photo";
 import verified from "../assets/icons/verified.svg"
 import FeedsCard from "./FeedsCard";
+import { BsCaretUpFill } from "react-icons/bs";
 
 const ArtisteDashboard = () => {
   const dispatch = useDispatch();
@@ -26,6 +27,8 @@ const ArtisteDashboard = () => {
 
     const [isShownText, setIsShownText] = React.useState(-1)
     const [isShown, setIsShown] = React.useState(-1)
+    const [isHover, setIsHover] = React.useState(false)
+    const [hoverStates, setHoverStates] = React.useState({});
 
     const Checking = (item: any, text: any) => {
       setIsShown(item)
@@ -35,11 +38,20 @@ const ArtisteDashboard = () => {
         setIsShownText(-1)
       }
     }
+    const handleMouseEnter = (index) => {
+      setHoverStates(prevStates => ({ ...prevStates, [index]: true }));
+      setIsHover(true);
+    };
+
+    const handleMouseLeave = (index) => {
+      setHoverStates(prevStates => ({ ...prevStates, [index]: false }));
+      setIsHover(false);
+    };
 
     return (
       <>
-        <div className="flex items-center md:px-0 px-6 mt-[3px] justify-between mb-[14px]">
-          <p className="txt font-medium text-base md:text-[17px] text-white">
+        <div className="flex items-center md:px-0 mt-[3px] justify-between mb-[14px] mx-[16px] md:mx-0">
+          <p className="txt font-medium md:text-[17px] text-[14px] text-white">
             Latest Artist Coins
           </p>
           <p className="font-light text-xs text-muted">
@@ -49,41 +61,43 @@ const ArtisteDashboard = () => {
         </div>
         <div
           id={"carousel"}
-          className="max-w-full md:px-0 px-6 overflow-auto scroll_event whitespace-nowrap md:mb-[2px] mb-2"
+          className="max-w-full md:px-0 px-0 md:px-6 overflow-auto scroll_event whitespace-nowrap md:mb-[2px] mb-2"
           ref={featuredRef}
         >
-          <div className="flex ">
+          <div className="flex">
             {artists.map((_, i) => (
-              <div key={i} onMouseOver={() => Checking(i, _.user.username ?? _.creatorCoinId)} onMouseOut={() => Checking(-1, _.user.username ?? _.creatorCoinId)} className="flex flex-col items-center mr-[22px] md:h-fit min-w-max md:w-[105px]" >
-                <Link to={`/${_.user.accountDomain}`} className="relative">
-                  <div className=" relative ">
-                    <Photo alt="" userId={_.user.username ?? _.user.accountPrincipal} src={_.user?.photo} className="object-cover h-[100px] text-4xl md:h-[105px] flex justify-center items-center w-[100px] md:w-[105px] rounded-full  mb-[16px]"
+              <div key={i} onMouseOver={() => Checking(i, _.creatorCoinId)} onMouseOut={() => Checking(-1, _.creatorCoinId)} onMouseEnter={() => handleMouseEnter(i)} onMouseLeave={() => handleMouseLeave(i)} className="relative ml-[16px] flex flex-col items-center h-fit min-w-max w-[110px]" >
+                {/* <Link to={`/${_.user.accountDomain}`} className="relative"> */}
+                  <div className=" relative mb-[10px]">
+                    <Photo alt="" userId={_.user.accountPrincipal} className="object-cover text-4xl h-[110px] flex justify-center items-center w-[110px] rounded-full "
                       style={{
-                        border: "8.7px solid #141922",
+                        border: "6px solid #141922",
                       }} />
                     {_.isVerified && (
                       <img src={verified} alt="verified" className=" absolute bottom-1 right-0 w-[32px] " />
                     )}
                   </div>
-                </Link>
-                <div className=" w-[105px]">
+                {/* </Link> */}
+                <div className=" w-[110px]">
                   <div className={isShownText === i ? "example1" : " h-[20px] w-full flex justify-center "}>
-                    <p onClick={() => navigate(`/${_.user.accountDomain}`)} className=" cursor-pointer mb-[3px] font-medium text-sm text-white" >
-                      $ {isShownText === i
-                        ? _.user.username.toUpperCase()
-                        : _.user.username.slice(0, 7).toUpperCase()}
+                    <p onClick={() => navigate(`/${_.user.accountDomain}`)} className=" cursor-pointer mb-[3px] font-semibold text-sm text-white" >
+                      ${isShownText === i
+                        ? _.creatorCoinId.toUpperCase()
+                        : _.creatorCoinId.slice(0, 7).toUpperCase()}
                     </p>
                   </div>
                 </div>
-                <div className=" w-full px-[2px] ">
-                  <button onClick={() => navigate(`/artistes/buy/${_.user.id}`)}
-                    className={isShown === i
-                      ? " bg-[#8369F4] h-[35px] md:flex justify-center items-center font-medium hidden rounded-full w-[105px] mt-[12px] text-[11.5px]  "
-                      : "bg-[#141922] text-[11.5px]  h-[35px] md:flex justify-center items-center font-medium hidden rounded-full w-[105px] mt-[12px] "
-                    } >
-                    Buy coin
-                  </button>
+                <div className="flex items-center gap-1">
+                  <BsCaretUpFill size={10} color='#31D298'/>
+                  <p className="text-[#536079] text-[12px] font-medium ">4.093 LZR</p>
                 </div>
+                {hoverStates[i] && (
+                  <>
+                    <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center bg-dark-700/20 backdrop-blur-sm">
+                      <div onClick={() => navigate(`/artistes/buy/${_.user.id}`)} className="cursor-pointer bg-s-gradient px-[12px] py-[7px] rounded-full text-[12px]">Buy coin</div>
+                    </div>
+                  </>
+                )}
               </div>
             ))}
           </div>
@@ -93,10 +107,19 @@ const ArtisteDashboard = () => {
   }
 
   return (
-    <div className=" w-screen md:w-full flex flex-col ">
+    <div className="w-full mb-[43px] md:mb-0 flex flex-col">
       <Carousel />
       <FeaturedArtistes />
-      <div className="h-px w-full lg:w-full bg-muted-50 mt-4 mb-3" />
+      <div className="h-px w-full bg-[#141922] mt-4 mb-4 px-[8px] md:mx-0" />
+      <FeedsCard />
+      <FeedsCard />
+      <FeedsCard />
+      <FeedsCard />
+      <FeedsCard />
+      <FeedsCard />
+      <FeedsCard />
+      <FeedsCard />
+      <FeedsCard />
       <FeedsCard />
       <FeedsCard />
       <FeedsCard />

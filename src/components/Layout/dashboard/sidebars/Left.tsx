@@ -18,6 +18,7 @@ import Speaker from "../../../../assets/svg/Speaker";
 import { AirdropIcon } from "../../../../assets/Airdrop";
 import { useDisclosure } from "@chakra-ui/react";
 import Airdrop from "../../../../containers/Airdrop";
+import Help from "../../../../assets/svg/Help";
 
 export const drawerMinWidth = 280;
 export const drawerMaxWidth = 24;
@@ -53,6 +54,12 @@ const tabs = [
     available: true,
     path: null,
   },
+  {
+    icon: Help,
+    label: "Help",
+    available: false,
+    path: "https://docs.loozr.io/",
+  },
 ];
 
 export const Left = () => {
@@ -84,10 +91,8 @@ export const Left = () => {
   };
 
   return (
-    <div
-      className={`bg-dark-900 flex flex-col items-start h-screen md:pl-20 xl:pl-[150px] pr-auto md:pr-6 xl:pr-6 pt-8 pb-12 mb-5`}
-      style={{ width: xl ? `${drawerMaxWidth}vw` : md ? "max-content" : 0 }}
-    >
+    <div className={`bg-dark-900 flex flex-col items-start hidden md:block h-screen md:pl-20 xl:pl-[150px] pr-auto md:pr-6 xl:pr-6 pt-8 pb-12 mb-5`}
+      style={{ width: xl ? `${drawerMaxWidth}vw` : md ? "max-content" : 0, }}>
       {xl ? (
         <img src={LoozrBeta} alt="" className={`w-28 mb-7`} />
       ) : (
@@ -105,7 +110,7 @@ export const Left = () => {
           )}
         </>
       )}
-      <div className="w-[85%] xl:h-[85%] flex flex-col items-end justify-center xl:block  overflow-y-auto overflow-x-hidden">
+      <div className="w-[85%] mx-2 xl:h-[85%] flex flex-col items-end justify-center xl:block  overflow-y-auto overflow-x-hidden">
         {tabs.map((tab: any) => (
           <Link
             className={`${

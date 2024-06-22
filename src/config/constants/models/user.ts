@@ -43,6 +43,7 @@ export default class User implements Model {
   accountPrincipal: string;
   followingsCount: number;
   id: number;
+  accountId: any;
   followersCount: number;
   tokenName: string;
   bio: string;

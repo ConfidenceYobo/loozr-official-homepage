@@ -73,7 +73,7 @@ const Carousel = () => {
 
 
   return (
-    <div className="h-[200px] mb-6 w-screen md:w-full relative rounded-[36px] overflow-hidden" >
+    <div className="h-[130px] md:h-[160px] mb-6 md:w-full relative rounded-[13px] overflow-hidden mx-[16px] md:mx-0" >
       {image.map((item: any, index: any) => {
         return (
           <AnimatePresence key={index} >
@@ -81,20 +81,20 @@ const Carousel = () => {
               <a target="_blank" rel="noreferrer" href={item.link} >
                 <motion.div
                   key={item}
-                  className=" w-screen md:w-full  min-h-[210px] absolute inset-x-0 top-0 bg-no-repeat bg-cover bg-center pl-8 py-7 flex flex-col justify-end "
-                  style={{ background: `url(${item.img})`, backgroundColor: "#000", backgroundPosition: "cover" }}
+                  className=" w-screen md:w-full h-full absolute inset-x-0 top-0 bg-no-repeat bg-cover bg-center rounded-[13px] pl-8 py-7 flex flex-col justify-end "
+                  style={{ background: `url(${item.img})`, borderRadius: '13px', backgroundColor: "none", backgroundPosition: "cover" }}
                   {...boxAnimation}
                 >
-                  <div className=" bg-black bg-opacity-40 z-10 absolute inset-0 " />
+                  {/* <div className=" bg-black bg-opacity-40 z-10 absolute inset-0 " /> */}
                   <p className=" relative z-20 text-white " >
                     <span className="text-loozr-purple relative z-20 font-medium text-[13px]">
                       MUSIC
                     </span>{" "}
                     <span className="text-xs relative z-20">/{item.month}</span>
                   </p>
-                  <p className="text-white relative z-20 font-semibold text-[17px] leading-7 max-w-[450px]">
+                  {/* <p className="text-white relative z-20 font-semibold text-[17px] leading-7 max-w-[450px]">
                     {item.details}
-                  </p>
+                  </p> */}
                 </motion.div>
               </a>
             }

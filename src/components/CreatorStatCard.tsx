@@ -30,7 +30,7 @@ export default function CreatorStatCard({ user }: { user: User }) {
   const dispatch = useDispatch();
   const bpsDenominator = 100;
   const coinInfo = useSelector((state: AppState) => state.artist.coinInfo);
-  console.log(coinInfo)
+  // console.log(coinInfo)
 
   useEffect(() => {
     dispatch(getCoinPrice(user.id));
@@ -51,48 +51,48 @@ export default function CreatorStatCard({ user }: { user: User }) {
   };
 
   return coinInfo ? (
-    <div style={{ background: "linear-gradient(58deg, rgba(20, 25, 34, 1) -12.45%, rgba(20, 25, 34, 0) 27.33%)" }}  className="w-full rounded-[40px] overflow-hidden px-3 md:p-8 min-h-[210px]">
-      <div className="grid grid-cols-1 md:flex">
+    <div style={{ background: "linear-gradient(180deg, #12161F 0%, rgba(18, 22, 31, 0) 100%)" }} className="w-full rounded-t-[16px] md:rounded-t-[24px] overflow-hidden p-4 md:p-8 min-h-[180px]">
+      <div className="grid grid-cols-1 md:flex md:items-center">
         <div className="flex-1">
-          <p className="font-medium text-xs text-muted mb-2 md:mb-[22px]">
+          <p className="font-medium text-xs text-muted mb-1 md:mb-[22px]">
            Artist Coin Name
           </p>
-          <p className="font-extrabold text-[22px] md:text-3xl text-white mb-6">
-            ${user.username}
+          <p className="font-extrabold uppercase text-[20px] md:text-3xl text-white mb-3">
+            ${user.tokenName}
           </p>
-          <div className="flex items-center justify-between mb-6 md:mb-auto">
-            <div className="flex flex-col gap-1 items-left md:text-left">
-              <p className="text-muted text-sm font-medium">Coin price</p>
-              <p className="font-bold text-sm md:text-[18px] text-white text-left mb-0">
+          <div className="flex flex-wrap items-center gap-2 justify-between mb-4 md:mb-auto">
+            <div className="flex flex-col gap-[0px] items-left md:text-left">
+              <p className="text-muted text-[12px] font-medium">Coin price</p>
+              <p className="font-semibold text-[13px] mt-[-6px] md:text-[15px] text-white text-left mb-0">
                 ${coinInfo.priceUSD} 
               </p>
             </div>
-            <div className="flex flex-col gap-1 items-left md:text-left">
-              <p className="text-muted text-sm font-medium">Market cap</p>
-              <p className="font-bold text-sm md:text-[18px] text-white text-left mb-0">
+            <div className="flex flex-col gap-[0px] items-left md:text-left">
+              <p className="text-muted text-[12px] font-medium">Market cap</p>
+              <p className="font-semibold text-[13px] mt-[-6px] md:text-[15px] text-white text-left mb-0">
                 ${coinInfo.marketCap}
               </p>
             </div>
-            <div className="flex flex-col gap-1 items-left md:text-left">
-              <p className="text-muted text-sm font-medium">Holders</p>
-              <p className="font-bold text-sm md:text-[18px] text-white text-left mb-0">
+            <div className="flex flex-col gap-[0px] items-left md:text-left">
+              <p className="text-muted text-[12px] font-medium">Holders</p>
+              <p className="font-semibold text-[13px] mt-[-6px] md:text-[15px] text-white text-left mb-0">
                 {coinInfo.coinHolders}
               </p>
             </div>
-            <div className="flex flex-col gap-1 items-left md:text-left">
-              <p className="text-muted text-sm font-medium">% Reward</p>
-              <p className="font-bold text-sm md:text-[18px] text-white text-left mb-0">
+            <div className="flex flex-col gap-[0px] items-left md:text-left">
+              <p className="text-muted text-[12px] font-medium">Artist Shares</p>
+              <p className="font-semibold text-[13px] mt-[-6px] md:text-[15px] text-white text-left mb-0">
                 {coinInfo.founderReward / bpsDenominator}%
               </p>
             </div>
           </div>
         </div>
         <div className="">
-          <div className="md:pl-24 flex md:flex-col items-center justify-end h-full">
+          <div className="md:pl-24 flex md:flex-col items-center gap-2 justify-end h-full">
             <div>
-              <p className="mb-2 font-medium text-[13px] text-[#15FFAB]">+4.5%</p>
+              <p className="font-medium text-[13px] text-[#15FFAB]">+4.5%</p>
             </div>
-            <ResponsiveContainer className="pl-2" width={200} height={100}>
+            <ResponsiveContainer className="pl-2" width={200} height={80}>
               <AreaChart
                 data={data}
                 margin={{ top: 10, right: 30, left: 0, bottom: 0 }}

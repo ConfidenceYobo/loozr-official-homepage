@@ -21,12 +21,12 @@ const Wallet = () => {
   const navigate = useNavigate();
   const [active, setActive] = useState(1);
   const user = useSelector((state: AppState) => state.user.userInfo);
-  const lzrAccountPrincipal = `${user.accountPrincipal}`;
-  const [balanceInLzr, setLZRBalance] = useState("_");
-  const [balanceUsd, setBalanceUSD] = useState("_.__");
+  const lzrAccountId = `${user.accountPrincipal}.${MIXER_ACCOUNT}`;
+  const [balanceInLzr, setLZRBalance] = useState("0.00");
+  const [balanceUsd, setBalanceUSD] = useState("0.00");
 
   const [copySuccess, setCopySuccess] = React.useState('');
-  
+
   useEffect(() => {
     const loadLZRBalance = async (accountPrincipal: string) => {
       const { handleGetLZRBalanace } = getLZRBalanceCallback();
@@ -42,17 +42,17 @@ const Wallet = () => {
       }
     };
 
-    loadLZRBalance(lzrAccountPrincipal);
+    loadLZRBalance(lzrAccountId);
   }, []);
 
-  function copyToClipboard(item: any, text: any) { 
-      navigator.clipboard.writeText(item)
-      setCopySuccess(text);
-      const t1 = setTimeout(() => {
-          setCopySuccess('');
-          clearTimeout(t1); 
-      }, 2000); 
-  }; 
+  function copyToClipboard(item: any, text: any) {
+    navigator.clipboard.writeText(item)
+    setCopySuccess(text);
+    const t1 = setTimeout(() => {
+      setCopySuccess('');
+      clearTimeout(t1);
+    }, 2000);
+  };
 
   const renderHistory = useMemo(() => {
     switch (active) {
@@ -100,15 +100,9 @@ const Wallet = () => {
   }, [active]);
 
   return (
-    <div className="w-full">
-      <div
-        style={{
-          background:
-            "linear-gradient(180deg, #12161F 0%, rgba(18, 22, 31, 0) 100%)",
-        }}
-        className="w-full  p-4 md:!py-8 rounded-t-[14px] md:!px-11 mb-7"
-      >
-        <div className="flex items-center rounded-t-[14px] justify-between mb-9">
+    <div className="w-full px-3 mt-3 md:!px-0">
+      <div style={{ background: "linear-gradient(180deg, #12161F 0%, rgba(18, 22, 31, 0) 100%)", }} className="w-full p-4 md:!py-8 rounded-t-[24px] mb-7" >
+        <div className="flex items-center rounded-t-[14px] justify-between mb-3">
           <p className="text-[17px] leading-7 font-medium md:font-medium text-white">
             My Wallet
           </p>
@@ -126,16 +120,16 @@ const Wallet = () => {
         <p className="font-light text-sm md:font-medium text-white mb-4 md:mb-8">
           ≈ ${balanceUsd} USD
         </p>
-        <div className="flex items-center mb-8 md:mb-9">
+        <div className="flex gap-4 w-full items-center mb-7 md:mb-9">
           <button
             onClick={() => navigate("/lzr/send")}
-            className="py-2.5 md:py-2.5 px-7 lg:px-auto lg:w-[130px] rounded-full bg-white text-black text-sm mr-4 font-semibold"
+            className="py-2.5 px-6 lg:px-auto rounded-full bg-white text-black text-[12px] md:text-[14px] font-semibold"
           >
             Send $LZR
           </button>
           <button
             onClick={() => toast.info("Coming soon!", TOAST_OPTIONS)}
-            className="py-2.5 md:py-2.5 px-7 lg:px-auto lg:w-[130px] rounded-full text-white text-sm font-semibold"
+            className="py-2.5 px-6 lg:px-auto rounded-full text-white text-[12px] md:text-[14px] font-semibold"
             style={{ border: "1.5px solid #222A3B" }}
           >
             Buy $LZR
@@ -143,10 +137,10 @@ const Wallet = () => {
         </div>
         <div className=" flex items-center ">
           <p className="text-white font-medium text-sm md:text-sm">
-            <span className="text-muted">Your principal:</span> {lzrAccountPrincipal}
+            <span className="text-muted">Your principal:</span> {lzrAccountId}
           </p>
           <button
-            onClick={() => copyToClipboard(lzrAccountPrincipal, "Copied!")}
+            onClick={() => copyToClipboard(lzrAccountId, "Copied!")}
             className=" w-[30px] ml-2 h-[30px] rounded-full bg-[#141922] flex justify-center items-center mr-2  "
           >
             <img src={copyimg} alt="copy" className=" w-[12.17px] " />
@@ -156,9 +150,8 @@ const Wallet = () => {
       </div>
       <div className="w-full pb-2 mb-9 border-b-2 border-muted-50 flex items-center text-sm font-medium text-muted">
         <p
-          className={`mr-10 cursor-pointer ${
-            active === 1 ? "active-tab-bottom" : "text-muted font-medium"
-          }`}
+          className={`mr-10 cursor-pointer ${active === 1 ? "active-tab-bottom" : "text-muted font-medium"
+            }`}
           onClick={() => setActive(1)}
         >
           Coins bought

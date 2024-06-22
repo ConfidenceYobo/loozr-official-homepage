@@ -25,26 +25,26 @@ const ArtisteRenderer = (props) => {
 
   return (
     <div
-      onScroll={props.onScroll}
-      ref={props.listInnerRef}
-      style={{ height: "100vh", overflowY: "auto" }}
+    // onScroll={props.onScroll}
+    // ref={props.listInnerRef}
+    // style={{ height: "100vh", overflowY: "auto" }}
     >
-      <div className="grid grid-cols-3 md:grid-cols-4 gap-y-8">
+      <div className="grid grid-cols-3 md:grid-cols-4 gap-y-6">
         {props.dataList.map((_, i) => (
           <div
             key={i}
-            onMouseOver={() => Checking(i, _.user.username ?? _.creatorCoinId)}
-            onMouseOut={() => Checking(-1, _.user.username ?? _.creatorCoinId)}
-            className="flex flex-col items-center mr-4 min-w-full md:min-w-[140px]"
+            onMouseOver={() => Checking(i, _.creatorCoinId)}
+            onMouseOut={() => Checking(-1, _.creatorCoinId)}
+            className="flex flex-col items-center mr-2 min-w-full md:min-w-[140px]"
           >
             <Link to={`/${_.user.accountDomain}`} className="relative">
               <Photo
-              // photoColor={_.user.profileColor}(`/${_.user.accountDomain}`)}
+                // photoColor={_.user.profileColor}(`/${_.user.accountDomain}`)}
                 alt=""
-                userId={_.user.username ?? _.user.accountId}
-                className="object-cover text-4xl flex justify-center items-center h-[100px] md:h-[105px] w-[100px] md:w-[105px] rounded-full mb-[16px]"
+                userId={_.user.accountPrincipal}
+                className="object-cover text-4xl flex justify-center items-center h-[90px] w-[90px] md:h-[110px] md:w-[110px] rounded-full mb-[8px]"
                 style={{
-                  border: "10px solid #141922",
+                  border: "6px solid #141922",
                 }}
               />
               {_.isVerified && (
@@ -102,8 +102,8 @@ const Artistes = () => {
   const artists = useSelector((state: AppState) => state.artist.artists);
 
   return (
-    <div className="w-full mt-8 md:mt-0 pb-28">
-      <p className="text-white text-[17px] leading-7 font-thin md:font-medium mb-7">
+    <div className="w-full mt-2 md:mt-0 pb-28">
+      <p className="text-white text-[14px] leading-7 mx-[16px] font-bold mb-7">
         Artistes
       </p>
       <Pagination

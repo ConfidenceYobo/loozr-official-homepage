@@ -35,20 +35,20 @@ export default function Index(props: any) {
     }; 
 
     return (
-        <div> 
+      <div className='mr-10'> 
             {props.otheruser?.id !== props.user?.id && props.otheruser?.id && (
                 <>
                   {!checkFollower ? ( 
                     <button
                       onClick={() => onFollow(props.otheruser)}
-                      className="py-[14.1px] px-3 w-40 sm:px-6 md:px-7 text-xs md:text-sm font-medium bg-dark-700 rounded-full mb-4 my-2"
+                      className="py-[8px] px-[14px] text-[12px] text-dark-700 font-semibold bg-white rounded-full"
                     >
                       Follow
                     </button>
                   ) : (
                     <button
                       onClick={() => onUnFollow(props.otheruser)}
-                      className="py-[14.1px] px-3 w-40 sm:px-6 md:px-7 text-xs md:text-sm font-medium bg-dark-700 rounded-full mb-4 my-2"
+                      className="py-[8px] px-[14px] text-[12px] text-dark-700 font-semibold bg-white rounded-full"
                     >
                       UnFollow
                     </button>

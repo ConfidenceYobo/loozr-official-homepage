@@ -15,61 +15,63 @@ interface TxHistoryProps {
 
 export default function TxHistoryCard(props: TxHistoryProps) {
   const renderCoinName = (coinName: string) => {
-    return <span className="uppercase">{coinName+" "}</span>;
-  }; 
+    return <span className="uppercase">{coinName + " "}</span>;
+  };
 
 
   return (
-    <div className="w-full flex items-center justify-between text-white mb-10 md:mb-6">
-      <div className="flex items-center">
+    <div className="w-max md:w-full flex items-center gap-6 justify-between text-white mb-8 md:mb-6 overflow-auto">
+      <div className="flex items-center w-fit">
         <div className=" w-fit ">
           <Photo
             alt=""
-            userId={props.hodler.user.username ?? props.hodler.user.accountPrincipal}
+            userId={props.hodler.user.accountPrincipal}
+            src={props.hodler.user.photo}
             className="h-12 w-12 rounded-full mr-3"
             style={{ border: "6px solid #141922" }}
           />
         </div>
         {props.txType === TXTYPES[0] ?
-          <div> 
-            <p className="text-xs md:text-sm font-bold text-white mb-0.5"> 
-              ${renderCoinName(props.hodler.coin)} 
+          <div>
+            <p className="text-xs md:text-sm font-bold text-white mb-0.5">
+              ${renderCoinName(props.hodler.coin)}
             </p>
-            <p className="text-[10px] md:text-xs md:w-[200px] font-medium  text-muted">
+            <p className="flex text-[10px] md:text-xs md:min-w-[200px] font-medium  text-muted">
               {props.hodler.balance ? (
-                <> 
-                  {props.hodler.user.username ?? props.hodler.user.accountPrincipal}{" "}Owns {props.hodler.balance.balance} $ 
-                  {props.txType === TXTYPES[1] ? 
+                <>
+                  {props.hodler.user.accountPrincipal + " "}
+                  Owns {props.hodler.balance.balance} $
+                  {props.txType === TXTYPES[1] ?
                     <>
-                      {renderCoinName(props.coin)}
+                      {renderCoinName(props.coin)} {" "}
                     </> :
                     <>
-                      {renderCoinName(props.hodler.coin)} 
+                      {renderCoinName(props.hodler.coin)} {" "}
                     </>}
-                  {" "}coins
+                  {" "} coins
                 </>
               ) : (
                 ""
               )}
             </p>
-          </div>:
-
+          </div>
+          :
           <div>
             <p className="text-xs md:text-sm font-bold text-white mb-0.5">
               {props.hodler.user.username ?? props.hodler.user.accountPrincipal}
             </p>
-            <p className="text-[10px] md:text-xs md:w-[200px] font-medium  text-muted">
+            <p className="flex text-[10px] md:text-xs md:min-w-[200px] font-medium  text-muted">
               {props.hodler.balance ? (
                 <>
-                  Owns {props.hodler.balance.balance} $ 
-                  {props.txType === TXTYPES[1] ? 
+                  Owns {props.hodler.balance.balance} $
+                  {props.txType === TXTYPES[1] ?
                     <>
-                      {renderCoinName(props.coin)}
+                      {renderCoinName(props.coin)} {" "}
                     </> :
                     <>
-                      {renderCoinName(props.hodler.coin)} 
+                      {renderCoinName(props.hodler.coin)} {" "}
                     </>}
-                  {" "}coins
+                  {" "} coins
                 </>
               ) : (
                 ""
@@ -79,7 +81,7 @@ export default function TxHistoryCard(props: TxHistoryProps) {
         }
       </div>
       {props.txType === TXTYPES[1] ? (
-        <div>
+        <div className="flex flex-col items-center">
           <p className="text-xs md:text-sm font-semibold text-white mb-0.5">
             {props.hodler.user.accountType}
           </p>
@@ -88,12 +90,12 @@ export default function TxHistoryCard(props: TxHistoryProps) {
           </p>
         </div>
       ) : null}
-      <div>
+      <div className="flex flex-col items-end">
         <p className="text-xs md:text-sm font-semibold text-white mb-0.5">
-          {props.hodler.balance ? `~$${props.hodler.balance.balanceUSD}` : ""}
+          {props.hodler.balance.balance} LZR
         </p>
         <p className="text-[10px] md:text-xs font-medium  text-muted">
-          USD value
+          {props.hodler.balance ? `~$${props.hodler.balance.balanceUSD}` : ""}
         </p>
       </div>
     </div>

@@ -2,12 +2,12 @@ import React, { useEffect, useMemo, useState } from "react";
 import { transactions } from "../components/dummy/wallet";
 import Arrow45Deg from "../assets/icons/arrow-45deg.svg";
 import Arrow225Deg from "../assets/icons/arrow-225deg.svg";
- 
+
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { AppState } from "../state/store";
 import soundcloud from "../assets/icons/soundcloud.svg";
-import spotify from "../assets/icons/spotify.svg"; 
+import spotify from "../assets/icons/spotify.svg";
 import instagram from "../assets/icons/instagram.svg";
 import twitter from "../assets/icons/twitter.svg";
 import share from "../assets/icons/share.svg";
@@ -32,6 +32,8 @@ import CheckFollowerButton from "../components/CheckFollowerButton";
 import QRCode from "react-qr-code";
 import QrcodeModal from "../components/QrcodeModal";
 import QrcodeScanner from "../components/QrcodeScanner";
+import { InfoRounded } from "@mui/icons-material";
+import { Spinner } from "@chakra-ui/react";
 
 const Profile = (props) => {
   const push = useNavigate();
@@ -51,11 +53,11 @@ const Profile = (props) => {
     (state: AppState) => state.user.currentProfile
   );
   const [currentProfile, setCurrentProfile] = useState<User>();
-  const coinInfo = useSelector((state: AppState) => state.artist.coinInfo); 
-  
-  const { getFollower } = useFollowerCallback(); 
-  const { getFollowing } = useFollowingCallback(); 
-  const { getCheckFollower } = useCheckFollowerCallback() 
+  const coinInfo = useSelector((state: AppState) => state.artist.coinInfo);
+
+  const { getFollower } = useFollowerCallback();
+  const { getFollowing } = useFollowingCallback();
+  const { getCheckFollower } = useCheckFollowerCallback()
 
   const [showModal, setShowModal] = React.useState(false)
   const [qrCodeModal, setQrCodeModal] = React.useState(false)
@@ -64,38 +66,38 @@ const Profile = (props) => {
 
   const navigate = useNavigate()
 
-  const CheckFollowers =async () => { 
-    if(currentProfile?.id){ 
-      const result: any = await getCheckFollower(currentProfile?.id); 
-      setCheckFollower(result) 
-      console.log(result); 
+  const CheckFollowers = async () => {
+    if (currentProfile?.id) {
+      const result: any = await getCheckFollower(currentProfile?.id);
+      setCheckFollower(result)
+      console.log(result);
     }
   }
 
-  React.useEffect(() => { 
+  React.useEffect(() => {
     CheckFollowers()
-  },[]) 
+  }, [])
 
-  const ClickFollwer = async ()=>{ 
-    const result = await getFollower(currentProfile.id); 
-    setData(result) 
-    setShowModal(true)
-  } 
-
-  const ClickFollwing = async ()=>{  
-    const result = await getFollowing(currentProfile.id); 
+  const ClickFollwer = async () => {
+    const result = await getFollower(currentProfile.id);
     setData(result)
     setShowModal(true)
-  }  
+  }
 
-  function copyToClipboard(item: any, text: any) { 
-      navigator.clipboard.writeText(item)
-      setCopySuccess(text);
-      const t1 = setTimeout(() => {
-          setCopySuccess('');
-          clearTimeout(t1); 
-      }, 2000); 
-  }; 
+  const ClickFollwing = async () => {
+    const result = await getFollowing(currentProfile.id);
+    setData(result)
+    setShowModal(true)
+  }
+
+  function copyToClipboard(item: any, text: any) {
+    navigator.clipboard.writeText(item)
+    setCopySuccess(text);
+    const t1 = setTimeout(() => {
+      setCopySuccess('');
+      clearTimeout(t1);
+    }, 2000);
+  };
 
   const loadProfile = () => {
     if (accountDomain) {
@@ -107,9 +109,9 @@ const Profile = (props) => {
     }
     dispatch(getIndividualProfile(decodedJWT()["id"]));
     setCurrentProfile(user);
-  }; 
+  };
 
-  const CloseModal = () => { 
+  const CloseModal = () => {
     dispatch(getIndividualProfile(accountDomain));
     setShowModal(false)
   }
@@ -127,59 +129,59 @@ const Profile = (props) => {
 
   useEffect(() => {
     setCurrentProfile(currentProfileFromState);
-  }, [currentProfileFromState]); 
+  }, [currentProfileFromState]);
 
-  const GotoDomain =(item)=> {
+  const GotoDomain = (item) => {
     setShowModal(false)
     navigate(`/${item}`)
   }
 
-  const Transaction =()=>{
-    return(
+  const Transaction = () => {
+    return (
       <>
-        {transactions.length === 0 ? ( 
-            <div className=" w-full py-5 rounded-lg bg-opacity-50 bg-[#10141C] mb-32 md:mb-12 " > 
-              <p className=" font-medium text-[13px] text-center " >No information avaliable 👋</p>
-            </div>  
-          ): (
-            <>
-              {transactions.map((item, index) => (
-                <div
-                  className="w-full flex items-center justify-between text-white mb-32 md:mb-6"
-                  key={index}
-                >
-                  <div className="flex items-start">
-                    <div className="rounded-full h-[44px] w-[44px] bg-dark-700 mr-4 flex items-center justify-center">
-                      <img
-                        src={item.type === "cr" ? Arrow225Deg : Arrow45Deg}
-                        alt=""
-                        className="object-cover w-3 h-4"
-                      />
-                    </div>
-                    <div>
-                      <p className="text-xs md:text-sm font-bold text-white mb-0.5">
-                        {item.type === "dr" ? "Sent" : "Received"}
-                        <span className="font-extrabold px-1">{item.token}</span>
-                        coin
-                      </p>
-                      <p className="text-[10px] md:text-xs md:font-medium font-light text-muted">
-                        {item.type === "dr" ? "to" : "from"}{" "}
-                        {item.type === "dr" ? item.to : item.from}
-                      </p>
-                    </div>
+        {transactions.length === 0 ? (
+          <div className=" w-full py-5 rounded-lg bg-opacity-50 bg-[#10141C] mb-32 md:mb-12 " >
+            <p className=" font-medium text-[13px] text-center " >No information avaliable 👋</p>
+          </div>
+        ) : (
+          <>
+            {transactions.map((item, index) => (
+              <div
+                className="w-full flex items-center justify-between text-white mb-32 md:mb-6"
+                key={index}
+              >
+                <div className="flex items-start">
+                  <div className="rounded-full h-[44px] w-[44px] bg-dark-700 mr-4 flex items-center justify-center">
+                    <img
+                      src={item.type === "cr" ? Arrow225Deg : Arrow45Deg}
+                      alt=""
+                      className="object-cover w-3 h-4"
+                    />
                   </div>
                   <div>
-                    <p className="text-xs md:text-sm font-semibold text-white mb-0.5">
-                      ~${item.price}
+                    <p className="text-xs md:text-sm font-bold text-white mb-0.5">
+                      {item.type === "dr" ? "Sent" : "Received"}
+                      <span className="font-extrabold px-1">{item.token}</span>
+                      coin
                     </p>
                     <p className="text-[10px] md:text-xs md:font-medium font-light text-muted">
-                      USD value
+                      {item.type === "dr" ? "to" : "from"}{" "}
+                      {item.type === "dr" ? item.to : item.from}
                     </p>
                   </div>
                 </div>
-              ))}
-            </>
-          )
+                <div>
+                  <p className="text-xs md:text-sm font-semibold text-white mb-0.5">
+                    ~${item.price}
+                  </p>
+                  <p className="text-[10px] md:text-xs md:font-medium font-light text-muted">
+                    USD value
+                  </p>
+                </div>
+              </div>
+            ))}
+          </>
+        )
         }
       </>
     )
@@ -188,7 +190,7 @@ const Profile = (props) => {
   const renderHistory = useMemo(() => {
     switch (active) {
       case 1:
-        return coinInfo ? <CoinHodlers coin={currentProfile} user={user} />: null;
+        return coinInfo ? <CoinHodlers coin={currentProfile} user={user} /> : null;
       case 2:
         return <CoinsBought user={currentProfile} />;
       case 3:
@@ -198,16 +200,19 @@ const Profile = (props) => {
     }
   }, [active, currentProfile, coinInfo]);
 
-  if (currentProfile && !currentProfile.accountPrincipal) {
-    return <div className="text-center mb-32">Profile Not Found!</div>;
-  }  
+  if (currentProfile && !currentProfile.accountId) {
+    return <div className="text-center h-[400px] flex flex-col justify-center items-center gap-4 italic">
+      <InfoRounded />
+      <p>Profile Not Found! or Error loading profile</p>
+    </div>;
+  }
 
-  const qrHandler =()=> {
+  const qrHandler = () => {
     setQrCodeModal(true)
     setIsShown(false)
   }
 
-  const qrScanHandler =()=> {
+  const qrScanHandler = () => {
     setQrCodeScannerModal(true)
     setIsShown(false)
   }
@@ -227,7 +232,7 @@ const Profile = (props) => {
                 src={currentProfile?.photo}
                 className="h-[170px] md:h-[130px] text-4xl w-[170px] md:w-[130px] object-cover rounded-full md:mr-3"
                 style={{ border: "8px solid #141922" }}
-              /> 
+              />
 
               {/* {!currentProfile && (
                 <img
@@ -346,7 +351,7 @@ const Profile = (props) => {
                           ? copySuccess
                           : "Copy profile link"}
                       </p>
-                      {currentProfile?.id === user?.id && ( 
+                      {currentProfile?.id === user?.id && (
                         <p
                           onClick={() => qrHandler()}
                           className=" font-medium text-[13px] mt-1 cursor-pointer  "
@@ -354,7 +359,7 @@ const Profile = (props) => {
                           My Qr Code
                         </p>
                       )}
-                      {currentProfile?.id === user?.id && ( 
+                      {currentProfile?.id === user?.id && (
                         <p
                           onClick={() => qrScanHandler()}
                           className=" font-medium text-[13px] mt-1 cursor-pointer  "
@@ -411,14 +416,14 @@ const Profile = (props) => {
                   ) : (
                     <p className="text-white max-w-[435px] font-medium text-xs md:text-[13px] mb-[20px]">
                       {currentProfile.bio}
-                      {currentProfile?.bio.length <= 100 && ( 
+                      {currentProfile?.bio.length <= 100 && (
                         <span
-                        onClick={() => setShowBio(false)}
-                        className=" text-[#FFCD43] cursor-pointer ml-2 "
+                          onClick={() => setShowBio(false)}
+                          className=" text-[#FFCD43] cursor-pointer ml-2 "
                         >
-                        {" "}
-                        See Less
-                      </span>
+                          {" "}
+                          See Less
+                        </span>
                       )}
                     </p>
                   )}
@@ -467,7 +472,7 @@ const Profile = (props) => {
                     Sell artiste coin
                   </button>
                 </div>
-              ) : null} 
+              ) : null}
               <CheckFollowerButton otheruser={currentProfile} user={user} />
               {currentProfile?.id === user?.id ? (
                 <div className="flex items-center mb-4">
@@ -487,7 +492,7 @@ const Profile = (props) => {
                   <img src={chain} alt="chain" className=" w-[12.39px] " />
                   <a
                     target="_blank"
-                    href={"http://"+currentProfile?.website+""}
+                    href={"http://" + currentProfile?.website + ""}
                     className=" font-medium text-sm ml-2 "
                   >
                     {currentProfile?.website}
@@ -498,17 +503,15 @@ const Profile = (props) => {
           </div>
           <div className="w-full pb-2 mb-9 border-b-2 border-muted-50 flex items-center text-sm font-medium text-muted">
             <p
-              className={`mr-10 cursor-pointer ${
-                active === 1 ? "active-tab-bottom " : "text-muted font-medium"
-              }`}
+              className={`mr-10 cursor-pointer ${active === 1 ? "active-tab-bottom " : "text-muted font-medium"
+                }`}
               onClick={() => setActive(1)}
             >
               Coin holders
             </p>
             <p
-              className={`mr-10 cursor-pointer ${
-                active === 2 ? "active-tab-bottom " : "text-muted font-medium"
-              }`}
+              className={`mr-10 cursor-pointer ${active === 2 ? "active-tab-bottom " : "text-muted font-medium"
+                }`}
               onClick={() => setActive(2)}
             >
               Coins bought
@@ -525,18 +528,24 @@ const Profile = (props) => {
           {renderHistory}
         </>
       ) : errorLoadingProfile ? (
-        <div className="text-center">Profile Not Found!</div>
+        <div className="text-center h-[400px] flex flex-col justify-center items-center gap-4 italic">
+          <InfoRounded />
+          <p>Profile Not Found! or Error loading profile</p>
+        </div>
       ) : (
-        <div className="text-center">Loading Profile...</div>
+        <div className="text-center h-[400px] flex flex-col gap-3 justify-center items-center">
+          <Spinner />
+          Loading Profile...
+        </div>
       )}
-      {qrCodeModal && ( 
+      {qrCodeModal && (
         <QrcodeModal close={setQrCodeModal} userInfo={currentProfile} />
       )}
-      {qrCodeScanerModal && ( 
-        <QrcodeScanner userinfo={currentProfile} close={setQrCodeScannerModal}  />
+      {qrCodeScanerModal && (
+        <QrcodeScanner userinfo={currentProfile} close={setQrCodeScannerModal} />
       )}
       {showModal && (
-        <div 
+        <div
           className=" fixed inset-0 flex justify-center items-center md:overflow-y-hidden bg-black bg-opacity-40 z-[70] "
         >
           <div className=" w-full md:w-[360px] md:h-auto relative z-[120] h-screen rounded-2xl bg-[#12161F]">
@@ -551,60 +560,60 @@ const Profile = (props) => {
             </div>
             <div className=" w-full px-6 md:py-4 md:h-[60vh] h-full flex flex-1 flex-col overflow-y-auto ">
               {/* {data && ( */}
-                <>
-                  {data.map((item: any, index: any) => {
-                    const domainName = item.account_id + "." + MIXER_ACCOUNT;
-                    console.log(item);
-                    
-                    return (
+              <>
+                {data.map((item: any, index: any) => {
+                  const domainName = item.account_id + "." + MIXER_ACCOUNT;
+                  console.log(item);
+
+                  return (
+                    <div
+                      key={index}
+                      className=" w-full cursor-pointer flex my-3 relative items-center "
+                    >
                       <div
-                        key={index}
-                        className=" w-full cursor-pointer flex my-3 relative items-center "
-                      >
-                        <div
-                          onClick={() => GotoDomain(domainName)}
-                          className=" w-fit relative cursor-pointer " > 
-                          <Photo
+                        onClick={() => GotoDomain(domainName)}
+                        className=" w-fit relative cursor-pointer " >
+                        <Photo
+                          alt=""
+                          userId={item.account_id}
+                          src={item?.photo}
+                          className="object-contain w-10 h-10 rounded-full "
+                          style={{ border: "3px solid #141922" }}
+                        />
+                        {item?.isVerified && (
+                          <img
+                            src={VerifiedBadge}
                             alt=""
-                            userId={item.account_id}
-                            src={item?.photo}
-                            className="object-contain w-10 h-10 rounded-full "
-                            style={{ border: "3px solid #141922" }}
-                          /> 
-                          {item?.isVerified && (
-                            <img
-                              src={VerifiedBadge}
-                              alt=""
-                              className="absolute w-4 h-4 right-0 bottom-0"
-                            />
-                          )}
-                        </div>
-                        {/* <div className=' w-10 h-10 rounded-full bg-red-600 border-[3px] border-[#222A3B] ' /> */}
-                        <div 
-                          onClick={() => GotoDomain(domainName)}
-                          className=" ml-3  cursor-pointer ">
-                          <div className=" flex -mt-1 items-center ">
-                            <p className=" text-[13px] font-semibold ">
-                              {" "}
-                              {item?.account_id}
-                            </p>
-                          </div>
-                          <div className=" flex -mt-1 items-center ">
-                            <p className=" text-[11px] font-semibold text-[#536079] ">
-                              {item?.email.slice(0,7)}
-                            </p>
-                          </div>
-                        </div> 
-                        <CheckFollower current={currentProfile} otheruser={item} check={data} user={user} />
+                            className="absolute w-4 h-4 right-0 bottom-0"
+                          />
+                        )}
                       </div>
-                    );
-                  })}
-                  {data.length === 0 && (
-                    <p className=" mt-4 font-medium text-center ">
-                      No information avaliable
-                    </p>
-                  )}
-                </>
+                      {/* <div className=' w-10 h-10 rounded-full bg-red-600 border-[3px] border-[#222A3B] ' /> */}
+                      <div
+                        onClick={() => GotoDomain(domainName)}
+                        className=" ml-3  cursor-pointer ">
+                        <div className=" flex -mt-1 items-center ">
+                          <p className=" text-[13px] font-semibold ">
+                            {" "}
+                            {item?.account_id}
+                          </p>
+                        </div>
+                        <div className=" flex -mt-1 items-center ">
+                          <p className=" text-[11px] font-semibold text-[#536079] ">
+                            {item?.email.slice(0, 7)}
+                          </p>
+                        </div>
+                      </div>
+                      <CheckFollower current={currentProfile} otheruser={item} check={data} user={user} />
+                    </div>
+                  );
+                })}
+                {data.length === 0 && (
+                  <p className=" mt-4 font-medium text-center ">
+                    No information avaliable
+                  </p>
+                )}
+              </>
               {/* )} */}
             </div>
           </div>

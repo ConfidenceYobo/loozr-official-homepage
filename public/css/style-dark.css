@@ -5586,3 +5586,12 @@ iframe {
     transform: translate(50%, -50%);
   }
 }
+
+
+@media screen and (max-width: 769px) {
+ .mouse-cursor,
+ .cursor-inner,
+ .cursor-outer {
+  display: none;
+ }
+}

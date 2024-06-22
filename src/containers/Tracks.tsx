@@ -7,25 +7,32 @@ import { getTracks } from "../state/track/actions";
 import { changePage, resetTracks } from "../state/track/trackReducer";
 
 const RenderTracks = (props) => {
+
   return (
     <div
-      onScroll={props.onScroll}
-      ref={props.listInnerRef}
-      style={{ height: "100vh", overflowY: "auto" }}
+      // onScroll={props.onScroll}
+      // ref={props.listInnerRef}
+      // style={{ height: "100vh", overflowY: "auto" }}
     >
-      {props.dataList.length === 0 ? (
-        <div className=" w-full py-5 rounded-lg mb-32 bg-[#10141C] bg-opacity-50 md:backdrop:mb-12 ">
-          <p className=" font-medium text-[13px] text-center ">
-            No information available 👋
-          </p>
+      <div className="flex flex-col w-full gap-[24px]">
+        <div className="w-full flex justify-between items-center px-[16px]">
+          <p className="font-bold text-[14px] text-white">Tracks you'd love</p>
+          {/* <p className="text-[12px] text-muted">view all</p> */}
         </div>
-      ) : (
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-x-5  gap-y-10">
-          {props.dataList.map((track, index) => (
-            <TrackCard key={index} track={track} />
-          ))}
-        </div>
-      )}
+        {props.dataList.length === 0 ? (
+          <div className=" w-full py-5 rounded-lg mb-32 bg-[#10141C] bg-opacity-50 md:backdrop:mb-12 ">
+            <p className=" font-medium text-[13px] text-center ">
+              No information available 👋
+            </p>
+          </div>
+        ) : (
+          <div className="grid grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-x-5 gap-y-10 gap-x-3 gap-y-8 w-full px-4 md:px-0 justify-items-center">
+            {props.dataList.map((track, index) => (
+              <TrackCard key={index} track={track} />
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   );
 };
