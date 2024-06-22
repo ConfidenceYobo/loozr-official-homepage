@@ -20,7 +20,6 @@ import LaunchToken from "../containers/LaunchToken";
 import AccountSetup from "../containers/AccountSetup";
 import EditProfile from "../containers/EditProfile";
 import Tracks from "../containers/Tracks";
-import BuyLzr from "../containers/BuyLzr";
 import SendLzr from "../containers/SendLzr";
 import NFTs from "../containers/Nfts";
 import Notifications from "../containers/Notifications";
@@ -28,13 +27,11 @@ import BuyArtistToken from "../containers/BuyArtistToken";
 import SellArtistToken from "../containers/SellArtistToken";
 import SelectGenres from "../containers/SelectGenres";
 import SubmitTwitter from "../containers/SubmitTwitter";
-import SuggestedArtistes from "../containers/SuggestedArtistes";
-import MusicInfo from "../containers/MusicInfo"; 
-import ExploreDashboard from "../containers/ExploreDashboard";
-import UpdateProfile from "../containers/UpdateProfile";
+import MusicInfo from "../containers/MusicInfo";
 import ProfileScan from "../containers/ProfileScan";
 import Product from "../containers/Product";
 import SongTokenization from "../containers/SongTokenization/SongTokenization";
+import SpotifyCallback from "../components/AirdropConnectSocial/SpotifyCallback";
 
 export const authRoutes = [
   {
@@ -84,7 +81,8 @@ export const authRoutes = [
     path: "verify-email/:email",
     private: false,
     component: VerifyEmail,
-  }, {
+  },
+  {
     name: "complete-verification",
     path: "account-activation-success",
     private: false,
@@ -107,7 +105,7 @@ export const authRoutes = [
     path: "/artists/music-info",
     private: false,
     component: MusicInfo,
-  }, 
+  },
   {
     name: "songTokenization",
     path: "song-tokenization",
@@ -119,7 +117,7 @@ export const authRoutes = [
   //   path: "updateprofile",
   //   private: true,
   //   component: UpdateProfile,
-  // }, 
+  // },
 ];
 
 export const routes = [
@@ -152,7 +150,13 @@ export const routes = [
     path: "/artists/songs/:id",
     private: false,
     component: SongDashboard,
-  }, 
+  },
+  {
+    name: "callback",
+    path: "/callback",
+    private: false,
+    component: SpotifyCallback,
+  },
 ];
 
 export const dashboard = [
@@ -218,8 +222,7 @@ export const dashboard = [
   },
 ];
 
-
-export const dashboardhome = [ 
+export const dashboardhome = [
   {
     name: "artiste dashboard",
     path: "explore",
@@ -232,6 +235,12 @@ export const dashboardhome = [
     private: false,
     component: ArtisteDashboard,
   },
+  // {
+  //   name: "airdrops",
+  //   path: "airdrops",
+  //   private: false,
+  //   component: ArtisteDashboard,
+  // },
   {
     name: "profile",
     path: "/:accountDomain",
@@ -244,4 +253,4 @@ export const dashboardhome = [
     private: true,
     component: ProfileScan,
   },
-]
+];

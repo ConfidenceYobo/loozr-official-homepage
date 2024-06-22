@@ -15,7 +15,9 @@ import { useBecomeArtisteCallback } from "../../../../state/artist/hooks";
 import { setPageLoaderStatus } from "../../../../state/misc";
 import SongUploadDialog from "../../../../components/SongTokenization/SongUploadDialog";
 import Speaker from "../../../../assets/svg/Speaker";
-import Airdrop from "../../../../assets/svg/Airdrop";
+import { AirdropIcon } from "../../../../assets/Airdrop";
+import { useDisclosure } from "@chakra-ui/react";
+import Airdrop from "../../../../containers/Airdrop";
 
 export const drawerMinWidth = 280;
 export const drawerMaxWidth = 24;
@@ -46,10 +48,10 @@ const tabs = [
     path: "/wallet",
   },
   {
-    icon: Airdrop,
+    icon: AirdropIcon,
     label: "Airdrops",
-    available: false,
-    path: "",
+    available: true,
+    path: null,
   },
 ];
 
@@ -75,6 +77,7 @@ export const Left = () => {
   };
   const [showModal, setShowModal] = React.useState(false);
   const [showMusicModal, setShowMusicModal] = React.useState(false);
+  const { isOpen, onClose, onOpen } = useDisclosure();
 
   const handleCloseSongTokenizationModal = () => {
     setShowMusicModal(false);
@@ -110,8 +113,9 @@ export const Left = () => {
             } hover:flex flex items-center text-[14px] font-medium relative text-[#536079] mt-2.5 xl:mt-auto mb-[22px]`}
             to={tab.path || "#!"}
             key={tab.label}
-            onClick={() =>
-              tab.path ? null : toast.info("Coming soon!", TOAST_OPTIONS)
+            onClick={
+              () => (tab.path ? null : onOpen())
+              // toast.info("Coming soon!", TOAST_OPTIONS)
             }
           >
             <tab.icon
@@ -128,11 +132,11 @@ export const Left = () => {
               {tab.label}
             </span>
 
-            {tab.label === "Airdrops" && (
+            {/* {tab.label === "Airdrops" && (
               <div className=" text-[9px] py-1 text-[#F3EC4E] bg-new-100 rounded-full md:hidden xl:flex font-medium flex justify-center items-center ml-auto px-3 w-fit ">
                 New
               </div>
-            )}
+            )} */}
           </Link>
         ))}
         {/* <div className="h-px w-full lg:w-full bg-muted-50 mt-8 mb-7" /> */}
@@ -224,6 +228,9 @@ export const Left = () => {
           />
         </div>
       )}
+
+      {/* Airdrop */}
+      {isOpen && <Airdrop onClose={onClose} isOpen={isOpen} />}
     </div>
   );
 };
