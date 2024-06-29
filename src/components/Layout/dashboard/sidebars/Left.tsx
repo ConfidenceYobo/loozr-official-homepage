@@ -126,13 +126,13 @@ export const Left = () => {
             <tab.icon
               className={`object-contain w-4 xl:w-4 h-4 xl:h-4 mr-3 xl:mr-4 ${
                 tab.path === pathname ? "text-white" : "text-[#536079]"
-              }`}
+              } ${isOpen && 'text-white'}`}
             />
 
             <span
               className={`${
                 tab.path === pathname && "font-bold text-[14px] text-white"
-              } cursor-pointer hidden xl:inline`}
+              } cursor-pointer hidden xl:inline ${isOpen && 'text-white'}`}
             >
               {tab.label}
             </span>

@@ -22,6 +22,9 @@ import Feeds2 from "../../../assets/svg/Feeds2";
 import Speaker from "../../../assets/svg/Speaker";
 import Help from "../../../assets/svg/Help";
 import { Link } from "react-router-dom";
+import { AirdropIcon } from "../../../assets/Airdrop";
+import { useDisclosure } from "@chakra-ui/react";
+import Airdrop from "../../../containers/Airdrop";
 
 const tabs = [
   {
@@ -49,10 +52,10 @@ const tabs = [
     path: "/wallet",
   },
   {
-    icon: Wallet,
+    icon: AirdropIcon,
     label: "Airdrops",
-    available: false,
-    path: "",
+    available: true,
+    path: null,
   },
   // {
   //   icon: Help,
@@ -69,14 +72,14 @@ const Dashboard = ({ children }: { children: React.ReactNode }) => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
 
-
   const user = useSelector((state: AppState) => state.user.userInfo);
   const lzrAccountPrincipal = `${user?.accountPrincipal}`;
 
-  const [balanceInLzr, setLZRBalance] = useState('0.00');
-  const [balanceUsd, setBalanceUSD] = useState('0.00');
+  const [balanceInLzr, setLZRBalance] = useState("0.00");
+  const [balanceUsd, setBalanceUSD] = useState("0.00");
   const [showModal, setShowModal] = useState(false);
   const [showMobileModal, setShowMobileModal] = useState(false);
+  const { isOpen, onClose, onOpen } = useDisclosure();
 
   useEffect(() => {
     const loadLZRBalance = async (accountPrincipal: string) => {
@@ -100,7 +103,7 @@ const Dashboard = ({ children }: { children: React.ReactNode }) => {
     <div className=" w-full flex flex-col justify-center items-center ">
       <div className="flex justify-between relative h-screen bg-[#0c0f16] w-full md:w-[768px] lg:w-full">
         <Left />
-        <div className='md:flex-1 md:pt-4 mb-10 !pr-0 w-full !overflow-x-hidden'>
+        <div className="md:flex-1 md:pt-4 mb-10 !pr-0 w-full !overflow-x-hidden">
           <div className="flex flex-col relative h-screen items-center w-full">
             <TopBar />
             <div className="w-full md:-mt-2 !px-0 ">
@@ -114,36 +117,60 @@ const Dashboard = ({ children }: { children: React.ReactNode }) => {
         </div>
         <Right />
         {/* {user && ( */}
-          <div className="flex items-end justify-between md:hidden z-50 fixed gap-3 bottom-0 inset-x-0 py-[20px] px-[24px] bg-dark-900 w-full">
-            {tabs.map((tab, index) => (
-              <Link
-                to={tab.path || "#!"}
-                key={index}
-                className={`hover:flex flex flex-col gap-[6px] items-center justify-center cursor-pointer text-[#536079] ${tabs.length !== index + 1 && "" }`}
-                onClick={() => tab.path && null}
+        <div className="flex items-end justify-between md:hidden z-50 fixed gap-3 bottom-0 inset-x-0 py-[20px] px-[24px] bg-dark-900 w-full">
+          {tabs.map((tab, index) => (
+            <Link
+              to={tab.path || "#!"}
+              key={index}
+              className={`hover:flex flex flex-col gap-[6px] items-center justify-center cursor-pointer text-[#536079] ${
+                tabs.length !== index + 1 && ""
+              }`}
+              onClick={
+                () => (tab.path ? null : onOpen())
+                // toast.info("Coming soon!", TOAST_OPTIONS)
+              }
+            >
+              <tab.icon
+                className={`object-contain w-5 h-5 ${
+                  tab.path === pathname ? "text-white" : "text-[#536079]"
+                } ${isOpen && "text-white"}`}
+              />
+              <p
+                className={`text-[8px] font-medium ${
+                  tab.path === pathname ? "text-white" : "text-[#536079]"
+                } ${isOpen && "text-white"}`}
               >
-                <tab.icon className={`object-contain w-5 h-5 ${tab.path === pathname ? "text-white" : "text-[#536079]" }`} />
-                <p className={`text-[8px] font-medium ${tab.path === pathname ? "text-white" : "text-[#536079]" }`} > 
-                  {tab.label}
-                </p>
-              </Link>
-            ))}
-          </div>
-          {/* )} */}
+                {tab.label}
+              </p>
+            </Link>
+          ))}
+        </div>
+        {/* )} */}
       </div>
       {!user && (
         <div className="hidden md:flex absolute bottom-0 w-full bg-g-gradient py-2 px-10 justify-between items-center">
-          <p className="font-medium text-white text-[12px] md:text-[14px]">Enabling everyone to #Listen2Earn per second, trade, and invest in creators & music tokens.</p>
+          <p className="font-medium text-white text-[12px] md:text-[14px]">
+            Enabling everyone to #Listen2Earn per second, trade, and invest in
+            creators & music tokens.
+          </p>
           <div className="flex gap-6 items-center">
-            <p className="rounded-full px-4 py-2 text-[14px] text-white bg-white/20" onClick={() => navigate("/login")}>
+            <p
+              className="rounded-full px-4 py-2 text-[14px] text-white bg-white/20"
+              onClick={() => navigate("/login")}
+            >
               Login account
             </p>
-            <p className="rounded-full px-4 py-2 text-[14px] text-white bg-[#141922]" onClick={() => navigate("/signup")}>
+            <p
+              className="rounded-full px-4 py-2 text-[14px] text-white bg-[#141922]"
+              onClick={() => navigate("/signup")}
+            >
               Signup for free!
             </p>
           </div>
         </div>
       )}
+      {/* Airdrop */}
+      {isOpen && <Airdrop onClose={onClose} isOpen={isOpen} />}
     </div>
   );
 };
