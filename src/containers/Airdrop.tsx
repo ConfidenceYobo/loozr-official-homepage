@@ -22,6 +22,7 @@ import { AppState } from "../state/store";
 import { textTruncate } from "../utils/textTruncate";
 import { useNavigate } from "react-router-dom";
 import Photo from "../components/Photo";
+import TiktokLogin from "../components/AirdropConnectSocial/Tiktok";
 
 export default function Airdrop({ isOpen, onClose }) {
   const navigate = useNavigate();
@@ -202,24 +203,7 @@ export default function Airdrop({ isOpen, onClose }) {
                   <ChevronRightOutlined />
                 </Flex>
                 <SpotifyButton />
-                <Flex
-                  cursor="pointer"
-                  align="center"
-                  justify="space-between"
-                  borderColor="rgba(83, 96, 121, 0.5)"
-                  borderWidth="1px"
-                  rounded="full"
-                  px="24px"
-                  py="18px"
-                  _hover={{ bg: "#141922" }}
-                  color="rgba(83, 96, 121, 0.5)"
-                >
-                  <Flex align="center" gap="16px">
-                    <Image src={Tiktok} w="32px" h="32px" />
-                    <Text color="white">Link TikTok Account</Text>
-                  </Flex>
-                  <ChevronRightOutlined />
-                </Flex>
+                <TiktokLogin />
               </VStack>
             </VStack>
           </ModalBody>
