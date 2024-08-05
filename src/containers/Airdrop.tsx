@@ -23,6 +23,7 @@ import { textTruncate } from "../utils/textTruncate";
 import { useNavigate } from "react-router-dom";
 import Photo from "../components/Photo";
 import TiktokLogin from "../components/AirdropConnectSocial/Tiktok";
+import TwitterLogin from "../components/AirdropConnectSocial/Twitter";
 
 export default function Airdrop({ isOpen, onClose }) {
   const navigate = useNavigate();
@@ -184,24 +185,7 @@ export default function Airdrop({ isOpen, onClose }) {
               </Box>
               <VStack w="full" gap="16px" align="left">
                 <h1 className="text-[14px] font-[700]">Connect Socials</h1>
-                <Flex
-                  cursor="pointer"
-                  align="center"
-                  justify="space-between"
-                  borderColor="rgba(83, 96, 121, 0.5)"
-                  borderWidth="1px"
-                  rounded="full"
-                  px="24px"
-                  py="18px"
-                  _hover={{ bg: "#141922" }}
-                  color="rgba(83, 96, 121, 0.5)"
-                >
-                  <Flex align="center" gap="16px">
-                    <Image src={Twitter} w="32px" h="32px" />
-                    <Text color="white">Link X (Twitter) Account</Text>
-                  </Flex>
-                  <ChevronRightOutlined />
-                </Flex>
+                <TwitterLogin />
                 <SpotifyButton />
                 <TiktokLogin />
               </VStack>

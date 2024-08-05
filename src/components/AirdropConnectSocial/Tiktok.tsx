@@ -3,11 +3,11 @@ import { ChevronRightOutlined, Logout } from "@mui/icons-material";
 import React, { useEffect, useState } from "react";
 import Tiktok from "../../assets/tiktok.svg";
 
-const CLIENT_ID = "awnyt7o7i329y8lt";
+const CLIENT_ID = "sbaw1yxy2lum6sklq2";
 const REDIRECT_URI = "https://localhost:3000/callback";
 const SCOPES = "user.info.basic";
 const csrfState = Math.random().toString(36).substring(2);
-const AUTH_URL = `https://www.tiktok.com/v2/auth/authorize/client_key=${CLIENT_ID}&response_type=code&redirect_uri=${REDIRECT_URI}&scope=${SCOPES}&state=${csrfState}`;
+const AUTH_URL = `https://www.tiktok.com/v2/auth/authorize/client_key=${CLIENT_ID}&response_type=code&scope=${SCOPES}&redirect_uri=${REDIRECT_URI}&state=${csrfState}`;
 
 const TiktokLogin = () => {
   const [userData, setUserData] = useState(null);

@@ -32,6 +32,8 @@ import ProfileScan from "../containers/ProfileScan";
 import Product from "../containers/Product";
 import SongTokenization from "../containers/SongTokenization/SongTokenization";
 import SpotifyCallback from "../components/AirdropConnectSocial/SpotifyCallback";
+import TiktokCallback from "../components/AirdropConnectSocial/TiktokCallback";
+import TwitterCallback from "../components/AirdropConnectSocial/TwitterCallback";
 
 export const authRoutes = [
   {
@@ -153,9 +155,21 @@ export const routes = [
   },
   {
     name: "callback",
-    path: "/callback",
+    path: "/spotify-callback",
     private: false,
     component: SpotifyCallback,
+  },
+  {
+    name: "callback",
+    path: "/callback",
+    private: false,
+    component: TiktokCallback,
+  },
+  {
+    name: "callback",
+    path: "/twitter-callback",
+    private: false,
+    component: TwitterCallback,
   },
 ];
 
