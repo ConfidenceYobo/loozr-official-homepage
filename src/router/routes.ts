@@ -167,7 +167,7 @@ export const routes = [
   },
   {
     name: "callback",
-    path: "/twitter-callback",
+    path: "/users/twitter-callback",
     private: false,
     component: TwitterCallback,
   },

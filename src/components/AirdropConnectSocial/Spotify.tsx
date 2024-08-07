@@ -5,7 +5,7 @@ import Spotify from "../../assets/spotify.svg";
 
 export default function SpotifyButton() {
   const CLIENT_ID = "e4397413a7ca44aaa463721856b398d3";
-  const REDIRECT_URI = "http://localhost:3000/callback";
+  const REDIRECT_URI = "http://localhost:3000/spotify-callback";
   const SCOPE = [
     "streaming",
     "user-read-email",

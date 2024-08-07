@@ -1,16 +1,21 @@
 import { Flex, Image, Text } from "@chakra-ui/react";
-import { ChevronRightOutlined } from "@mui/icons-material";
-import React from "react";
+import { ChevronRightOutlined, Logout } from "@mui/icons-material";
+import React, { useEffect } from "react";
+import Twitter from "../../assets/twitter.svg";
+
 
 export default function TwitterLogin() {
+
+  const [userData, setUserData] = React.useState(null);
+
   const token = localStorage.getItem("jwtToken");
-  console.log(token);
+  // console.log(token);
 
   const handleLogin = () => {
     fetch("https://api.loozr.io/api/users/twitter-login", {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${token}`,
+        "Authorization": `Bearer ${token}`,
         "Content-Type": "application/json",
       },
     })
@@ -25,6 +30,12 @@ export default function TwitterLogin() {
       .catch((error) => console.error("Error:", error));
   };
 
+  //
+  useEffect(() => {
+    const userTwitterProfile = localStorage.getItem("userTwitterProfile");
+    setUserData(userTwitterProfile ? JSON.parse(userTwitterProfile) : null);
+  }, []);
+
   return (
     <>
       <Flex
@@ -38,26 +49,26 @@ export default function TwitterLogin() {
         py="18px"
         _hover={{ bg: "#141922" }}
         color="rgba(83, 96, 121, 0.5)"
-        onClick={handleLogin}
+        onClick={userData? null : handleLogin}
       >
         <Flex align="center" gap="16px">
-          {/* <Image
-            src={userData ? userData?.images[1].url : Tiktok}
+          <Image
+            src={Twitter}
             w="32px"
             h="32px"
             rounded="full"
-          /> */}
+          />
           <Text color="white">
-            Link X(Twitter) Account
-            {/* {userData ? `${userData?.display_name}` : "Link Tiktok Account"} */}
+            {userData ? `@${userData?.screen_name}` : " Link X(Twitter) Account"}
           </Text>
         </Flex>
-        {/* {userData ? (
-          <Logout onClick={() => LogOut()} />
+        {userData ? (
+          <Logout 
+          // onClick={() => LogOut()}
+           />
         ) : (
           <ChevronRightOutlined />
-          )} */}
-        <ChevronRightOutlined />
+          )}
       </Flex>
     </>
   );

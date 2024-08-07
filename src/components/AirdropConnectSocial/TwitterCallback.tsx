@@ -6,11 +6,15 @@ const TwitterCallback = () => {
     const urlParams = new URLSearchParams(window.location.search);
     const oauthToken = urlParams.get("oauth_token");
     const oauthVerifier = urlParams.get("oauth_verifier");
+    const token = localStorage.getItem("jwtToken");
+
+    console.log("oauthToken", oauthToken, "oauthVerifier", oauthVerifier);
 
     if (oauthToken && oauthVerifier) {
       fetch("https://api.loozr.io/api/users/twitter-callback", {
         method: "POST",
         headers: {
+          Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
@@ -21,7 +25,8 @@ const TwitterCallback = () => {
         .then((response) => response.json())
         .then((data) => {
           console.log("User logged in:", data);
-          // Handle the login success, e.g., redirect to a logged-in page
+          localStorage.setItem("userTwitterProfile", JSON.stringify(data));
+          window.location.href = "/feeds";
         })
         .catch((error) => console.error("Error:", error));
     }

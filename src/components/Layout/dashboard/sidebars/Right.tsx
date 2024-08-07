@@ -41,7 +41,7 @@ export default function Right() {
   const [profileModal, setProfileModal] = useState(false);
 
   const modalRef = useRef(null);
-  console.log(user, "user");
+  // console.log(user, "user");
 
   useEffect(() => {
     function handleClickOutside(event) {
