@@ -59,7 +59,7 @@ export default function TwitterLogin() {
             rounded="full"
           />
           <Text color="white">
-            {userData ? `@${userData?.screen_name}` : " Link X(Twitter) Account"}
+            {userData ? `@${userData?.twitter_account}` : " Link X(Twitter) Account"}
           </Text>
         </Flex>
         {userData ? (

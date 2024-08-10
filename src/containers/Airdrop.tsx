@@ -28,6 +28,8 @@ import TwitterLogin from "../components/AirdropConnectSocial/Twitter";
 export default function Airdrop({ isOpen, onClose }) {
   const navigate = useNavigate();
   const user = useSelector((state: AppState) => state.user.userInfo);
+  console.log(user);
+  
 
   return (
     <>

@@ -4,39 +4,34 @@ import React, { useEffect, useState } from "react";
 import Spotify from "../../assets/spotify.svg";
 
 export default function SpotifyButton() {
-  const CLIENT_ID = "e4397413a7ca44aaa463721856b398d3";
-  const REDIRECT_URI = "http://localhost:3000/spotify-callback";
-  const SCOPE = [
-    "streaming",
-    "user-read-email",
-    "user-read-private",
-    "playlist-read-private",
-    "user-library-read",
-    "user-top-read",
-  ];
-  const [userData, setUserData] = useState(null);
+  const [userData, setUserData] = React.useState(null);
 
-  const handleSpotifyLogin = () => {
-    const state = Math.random().toString(36).substring(7);
+  const token = localStorage.getItem("jwtToken");
+  // console.log(token);
 
-    const spotifyURL = `https://accounts.spotify.com/authorize?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=code&scope=${SCOPE.join(
-      "%20"
-    )}&state=${state}&show_dialog=true`;
-    sessionStorage.setItem("spotifyAuth", state);
-    window.location.href = spotifyURL;
+  const handleLogin = () => {
+    fetch("https://api.loozr.io/api/users/spotify-login", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.authorization_url) {
+          window.location.href = data.authorization_url;
+        } else {
+          console.error("Authorization URL not received");
+        }
+      })
+      .catch((error) => console.error("Error:", error));
   };
 
-  //
   useEffect(() => {
-    const userProfile = localStorage.getItem("userProfile");
-    setUserData(userProfile ? JSON.parse(userProfile) : null);
+    const userSpotifyProfile = localStorage.getItem("userSpotifyProfile");
+    setUserData(userSpotifyProfile ? JSON.parse(userSpotifyProfile) : null);
   }, []);
-
-  const LogOut = () => {
-    localStorage.removeItem("userProfile");
-    localStorage.removeItem("userAccessToken");
-    window.location.reload();
-  };
 
   return (
     <>
@@ -51,24 +46,15 @@ export default function SpotifyButton() {
         py="18px"
         _hover={{ bg: "#141922" }}
         color="rgba(83, 96, 121, 0.5)"
-        onClick={userData ? undefined : handleSpotifyLogin}
+        onClick={userData ? undefined : handleLogin}
       >
         <Flex align="center" gap="16px">
-          <Image
-            src={userData ? userData?.images[1].url : Spotify}
-            w="32px"
-            h="32px"
-            rounded="full"
-          />
+          <Image src={Spotify} w="32px" h="32px" rounded="full" />
           <Text color="white">
-            {userData ? `${userData?.display_name}` : "Link Spotify Account"}
+            {userData ? `${userData?.spotify_account}` : "Link Spotify Account"}
           </Text>
         </Flex>
-        {userData ? (
-          <Logout onClick={() => LogOut()} />
-        ) : (
-          <ChevronRightOutlined />
-        )}
+        {userData ? <Logout /> : <ChevronRightOutlined />}
       </Flex>
     </>
   );

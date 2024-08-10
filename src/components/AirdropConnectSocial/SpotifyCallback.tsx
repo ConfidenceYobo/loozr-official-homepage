@@ -1,29 +1,34 @@
 // Assume using React Router
 import { useEffect } from "react";
-import { useLocation } from "react-router-dom";
 import { VStack, Spinner, Text } from "@chakra-ui/react";
-import { usefetchSpotifyUserData } from "./hook/useFetchSpotifyData";
-import { getAccessToken } from "./hook/useGetSpotifyAccessToken";
 
 function SpotifyCallback() {
-  const location = useLocation();
-
-  const getCallbaxk = async () => {
-    const code = new URLSearchParams(location.search).get("code");
-    console.log(code);
-    
-    if (code) {
-      const accessToken = await getAccessToken(code);
-      localStorage.setItem("userAccessToken", accessToken);
-
-      const profile = await usefetchSpotifyUserData(accessToken);
-      localStorage.setItem("userProfile", JSON.stringify(profile));
-
-      window.location.href = '/feeds'
-    }
-  };
   useEffect(() => {
-    getCallbaxk();
+    const urlParams = new URLSearchParams(window.location.search);
+    const code = urlParams.get("code");
+    const token = localStorage.getItem("jwtToken");
+
+    console.log("code", code);
+
+    if (code) {
+      fetch("https://api.loozr.io/api/users/spotify-callback", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          code: code,
+        }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log("User spotify logged in:", data);
+          localStorage.setItem("userSpotifyProfile", JSON.stringify(data));
+          window.location.href = "/feeds";
+        })
+        .catch((error) => console.error("Error:", error));
+    }
   }, []);
 
   return (

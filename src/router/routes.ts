@@ -155,7 +155,7 @@ export const routes = [
   },
   {
     name: "callback",
-    path: "/spotify-callback",
+    path: "/users/spotify-callback",
     private: false,
     component: SpotifyCallback,
   },
