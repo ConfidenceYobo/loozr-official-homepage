@@ -187,8 +187,8 @@ export default function Airdrop({ isOpen, onClose }) {
               </Box>
               <VStack w="full" gap="16px" align="left">
                 <h1 className="text-[14px] font-[700]">Connect Socials</h1>
-                <TwitterLogin />
-                <SpotifyButton />
+                <TwitterLogin username={user.twitter_account} image={user.twitter_photo} />
+                <SpotifyButton username={user.spotify_account} />
                 <TiktokLogin />
               </VStack>
             </VStack>

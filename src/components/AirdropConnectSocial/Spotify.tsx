@@ -3,9 +3,7 @@ import { ChevronRightOutlined, Logout } from "@mui/icons-material";
 import React, { useEffect, useState } from "react";
 import Spotify from "../../assets/spotify.svg";
 
-export default function SpotifyButton() {
-  const [userData, setUserData] = React.useState(null);
-
+export default function SpotifyButton({ username }) {
   const token = localStorage.getItem("jwtToken");
   // console.log(token);
 
@@ -28,11 +26,6 @@ export default function SpotifyButton() {
       .catch((error) => console.error("Error:", error));
   };
 
-  useEffect(() => {
-    const userSpotifyProfile = localStorage.getItem("userSpotifyProfile");
-    setUserData(userSpotifyProfile ? JSON.parse(userSpotifyProfile) : null);
-  }, []);
-
   return (
     <>
       <Flex
@@ -46,15 +39,15 @@ export default function SpotifyButton() {
         py="18px"
         _hover={{ bg: "#141922" }}
         color="rgba(83, 96, 121, 0.5)"
-        onClick={userData ? undefined : handleLogin}
+        onClick={username ? undefined : handleLogin}
       >
         <Flex align="center" gap="16px">
           <Image src={Spotify} w="32px" h="32px" rounded="full" />
           <Text color="white">
-            {userData ? `${userData?.spotify_account}` : "Link Spotify Account"}
+            {username ? `${username}` : "Link Spotify Account"}
           </Text>
         </Flex>
-        {userData ? <Logout /> : <ChevronRightOutlined />}
+        {!username && <ChevronRightOutlined />}
       </Flex>
     </>
   );

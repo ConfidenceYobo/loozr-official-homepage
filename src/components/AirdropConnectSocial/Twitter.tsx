@@ -3,11 +3,7 @@ import { ChevronRightOutlined, Logout } from "@mui/icons-material";
 import React, { useEffect } from "react";
 import Twitter from "../../assets/twitter.svg";
 
-
-export default function TwitterLogin() {
-
-  const [userData, setUserData] = React.useState(null);
-
+export default function TwitterLogin({ username, image }) {
   const token = localStorage.getItem("jwtToken");
   // console.log(token);
 
@@ -15,7 +11,7 @@ export default function TwitterLogin() {
     fetch("https://api.loozr.io/api/users/twitter-login", {
       method: "POST",
       headers: {
-        "Authorization": `Bearer ${token}`,
+        Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
       },
     })
@@ -30,12 +26,6 @@ export default function TwitterLogin() {
       .catch((error) => console.error("Error:", error));
   };
 
-  //
-  useEffect(() => {
-    const userTwitterProfile = localStorage.getItem("userTwitterProfile");
-    setUserData(userTwitterProfile ? JSON.parse(userTwitterProfile) : null);
-  }, []);
-
   return (
     <>
       <Flex
@@ -49,26 +39,20 @@ export default function TwitterLogin() {
         py="18px"
         _hover={{ bg: "#141922" }}
         color="rgba(83, 96, 121, 0.5)"
-        onClick={userData? null : handleLogin}
+        onClick={username ? null : handleLogin}
       >
         <Flex align="center" gap="16px">
           <Image
-            src={Twitter}
+            src={image ? image : Twitter}
             w="32px"
             h="32px"
             rounded="full"
           />
           <Text color="white">
-            {userData ? `@${userData?.twitter_account}` : " Link X(Twitter) Account"}
+            {username ? `@${username}` : " Link X(Twitter) Account"}
           </Text>
         </Flex>
-        {userData ? (
-          <Logout 
-          // onClick={() => LogOut()}
-           />
-        ) : (
-          <ChevronRightOutlined />
-          )}
+        {!username && <ChevronRightOutlined />}
       </Flex>
     </>
   );
