@@ -183,7 +183,9 @@ export default function Right() {
                     <div
                       className="py-3 px-4 bg-dark-700 text-[12px]"
                       style={{ borderTop: "1px solid rgba(83, 96, 121, 0.2)" }}
-                      onClick={() => (user ? navigate("/" + user.accountDomain) : null)}
+                      onClick={() =>
+                        user ? navigate("/" + user.accountDomain) : null
+                      }
                     >
                       View my profile
                     </div>

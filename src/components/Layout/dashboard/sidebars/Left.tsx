@@ -91,8 +91,10 @@ export const Left = () => {
   };
 
   return (
-    <div className={`bg-dark-900 flex flex-col items-start hidden md:block h-screen md:pl-20 xl:pl-[150px] pr-auto md:pr-6 xl:pr-6 pt-8 pb-12 mb-5`}
-      style={{ width: xl ? `${drawerMaxWidth}vw` : md ? "max-content" : 0, }}>
+    <div
+      className={`bg-dark-900 flex flex-col items-start hidden md:block h-screen md:pl-20 xl:pl-[150px] pr-auto md:pr-6 xl:pr-6 pt-8 pb-12 mb-5`}
+      style={{ width: xl ? `${drawerMaxWidth}vw` : md ? "max-content" : 0 }}
+    >
       {xl ? (
         <img src={LoozrBeta} alt="" className={`w-28 mb-7`} />
       ) : (
@@ -126,13 +128,13 @@ export const Left = () => {
             <tab.icon
               className={`object-contain w-4 xl:w-4 h-4 xl:h-4 mr-3 xl:mr-4 ${
                 tab.path === pathname ? "text-white" : "text-[#536079]"
-              } ${isOpen && 'text-white'}`}
+              } ${isOpen && "text-white"}`}
             />
 
             <span
               className={`${
                 tab.path === pathname && "font-bold text-[14px] text-white"
-              } cursor-pointer hidden xl:inline ${isOpen && 'text-white'}`}
+              } cursor-pointer hidden xl:inline ${isOpen && "text-white"}`}
             >
               {tab.label}
             </span>
@@ -220,7 +222,7 @@ export const Left = () => {
       {user && !user?.isArtist ? (
         <div
           onClick={() => becomeArtist()}
-          className=" h-[50px] flex justify-center items-center text-white disabled:text-muted font-medium md:text-[13px] bg-gradient-ld disabled:bg-dark-800 mb-11 w-full"
+          className=" h-[50px] rounded-[8px] px-3 flex justify-center items-center text-white disabled:text-muted font-medium md:text-[13px] bg-gradient-ld disabled:bg-dark-800 mb-11 w-full"
         >
           Become an Artist
         </div>
@@ -235,7 +237,7 @@ export const Left = () => {
       )}
 
       {/* Airdrop */}
-      {isOpen && <Airdrop onClose={onClose} isOpen={isOpen} />}
+      {isOpen && <Airdrop onClose={onClose} isOpen={isOpen} onOpen={onOpen} />}
     </div>
   );
 };

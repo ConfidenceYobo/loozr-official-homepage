@@ -8,7 +8,7 @@ function SpotifyCallback() {
     const code = urlParams.get("code");
     const token = localStorage.getItem("jwtToken");
 
-    console.log("code", code);
+    // console.log("code", code);
 
     if (code) {
       fetch("https://api.loozr.io/api/users/spotify-callback", {

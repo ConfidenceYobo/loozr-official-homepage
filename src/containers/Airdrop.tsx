@@ -13,9 +13,6 @@ import {
   Button,
 } from "@chakra-ui/react";
 import { ChevronRightOutlined } from "@mui/icons-material";
-import Twitter from "../assets/twitter.svg";
-import Tiktok from "../assets/tiktok.svg";
-import Spotify from "../assets/spotify.svg";
 import SpotifyButton from "../components/AirdropConnectSocial/Spotify";
 import { useSelector } from "react-redux";
 import { AppState } from "../state/store";
@@ -25,7 +22,7 @@ import Photo from "../components/Photo";
 import TiktokLogin from "../components/AirdropConnectSocial/Tiktok";
 import TwitterLogin from "../components/AirdropConnectSocial/Twitter";
 
-export default function Airdrop({ isOpen, onClose }) {
+export default function Airdrop({ isOpen, onClose, onOpen }) {
   const navigate = useNavigate();
   const user = useSelector((state: AppState) => state.user.userInfo);
   console.log(user);
@@ -137,7 +134,7 @@ export default function Airdrop({ isOpen, onClose }) {
                       <Flex align={"center"} gap="8px">
                         <Image src="/coin-1.svg" w="48px" h="48px" />
                         <Text fontWeight={800} fontSize={24} color="white">
-                          0.012500
+                          {user?.points}.00
                         </Text>
                       </Flex>
                       <Button
@@ -168,7 +165,7 @@ export default function Airdrop({ isOpen, onClose }) {
                       <Flex align={"center"} gap="8px">
                         <Image src="/coin-1.svg" w="24px" h="24px" />
                         <Text fontWeight={500} fontSize={14} color="white">
-                          0.0000
+                          {user?.points}.00
                         </Text>
                       </Flex>
                     </Flex>
@@ -189,7 +186,7 @@ export default function Airdrop({ isOpen, onClose }) {
                 <h1 className="text-[14px] font-[700]">Connect Socials</h1>
                 <TwitterLogin username={user.twitter_account} image={user.twitter_photo} />
                 <SpotifyButton username={user.spotify_account} />
-                <TiktokLogin />
+                {/* <TiktokLogin /> */}
               </VStack>
             </VStack>
           </ModalBody>

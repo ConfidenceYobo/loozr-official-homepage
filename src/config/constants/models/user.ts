@@ -67,6 +67,7 @@ export default class User implements Model {
   spotify_account?: string;
   tiktok_account?: string;
   twitter_photo?: any;
+  points?: any;
 
   constructor({
     username,
@@ -133,6 +134,7 @@ export default class User implements Model {
     this.spotify_account = jsonData["spotify_account"];
     this.tiktok_account = jsonData["tiktok_account"];
     this.twitter_photo = jsonData["twitter_photo"];
+    this.points = jsonData["points"];
   }
 
   get profileColor() {

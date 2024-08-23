@@ -170,7 +170,38 @@ const Dashboard = ({ children }: { children: React.ReactNode }) => {
         </div>
       )}
       {/* Airdrop */}
-      {isOpen && <Airdrop onClose={onClose} isOpen={isOpen} />}
+      {isOpen && <Airdrop onClose={onClose} isOpen={isOpen} onOpen={onOpen} />}
+      {(localStorage.getItem("userTwitterProfile") ||
+        localStorage.getItem("userTiktokProfile") ||
+        localStorage.getItem("userSpotifyProfile")) && (
+        <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-90 z-[80]">
+          <div className="bg-[#12161F] rounded-lg p-6 max-w-sm m-4 w-full flex flex-col gap-3 justify-center items-center ">
+            <div className="pointer-events-none">
+              <img
+                src="/confetti.png"
+                alt="Confetti"
+                className="w-[100px] h-[100px] object-cover"
+              />
+            </div>
+            <h2 className="text-white text-xl font-bold">
+              Connection Successful!
+            </h2>
+            <p className="text-[#536079] text-center">
+              Your social account has been successfully connected to Loozr.
+            </p>
+            <button
+              onClick={() => {
+                localStorage.removeItem("userTwitterProfile");
+                localStorage.removeItem("userTiktokProfile");
+                localStorage.removeItem("userSpotifyProfile");
+              }}
+              className="w-full bg-gradient-ld text-white font-medium py-2 rounded-lg"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
