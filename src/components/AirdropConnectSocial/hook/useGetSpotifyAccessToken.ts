@@ -8,7 +8,7 @@ export async function getAccessToken(code: string): Promise<string> {
     params.append("client_secret", clientSecret);
     params.append("grant_type", "authorization_code");
     params.append("code", code);
-    params.append("redirect_uri", "http://localhost:3000/callback");
+    params.append("redirect_uri", "https://dfinity.loozr.io/callback");
     params.append("code_verifier", verifier!);
   
     const result = await fetch("https://accounts.spotify.com/api/token", {
