@@ -194,6 +194,7 @@ const Dashboard = ({ children }: { children: React.ReactNode }) => {
                 localStorage.removeItem("userTwitterProfile");
                 localStorage.removeItem("userTiktokProfile");
                 localStorage.removeItem("userSpotifyProfile");
+                onClose();
               }}
               className="w-full bg-gradient-ld text-white font-medium py-2 rounded-lg"
             >
