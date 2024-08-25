@@ -21,12 +21,12 @@ import { useNavigate } from "react-router-dom";
 import Photo from "../components/Photo";
 import TiktokLogin from "../components/AirdropConnectSocial/Tiktok";
 import TwitterLogin from "../components/AirdropConnectSocial/Twitter";
+import { formatNumber, getFullDisplayBalance } from "../utils/formatBalance";
 
 export default function Airdrop({ isOpen, onClose, onOpen }) {
   const navigate = useNavigate();
   const user = useSelector((state: AppState) => state.user.userInfo);
-  console.log(user);
-  
+  // console.log(user);
 
   return (
     <>
@@ -134,7 +134,7 @@ export default function Airdrop({ isOpen, onClose, onOpen }) {
                       <Flex align={"center"} gap="8px">
                         <Image src="/coin-1.svg" w="48px" h="48px" />
                         <Text fontWeight={800} fontSize={24} color="white">
-                          {user?.points}.00
+                          {getFullDisplayBalance(formatNumber(user?.points))}
                         </Text>
                       </Flex>
                       <Button
@@ -165,7 +165,7 @@ export default function Airdrop({ isOpen, onClose, onOpen }) {
                       <Flex align={"center"} gap="8px">
                         <Image src="/coin-1.svg" w="24px" h="24px" />
                         <Text fontWeight={500} fontSize={14} color="white">
-                          {user?.points}.00
+                          {getFullDisplayBalance(formatNumber(user?.points))}
                         </Text>
                       </Flex>
                     </Flex>
@@ -184,7 +184,10 @@ export default function Airdrop({ isOpen, onClose, onOpen }) {
               </Box>
               <VStack w="full" gap="16px" align="left">
                 <h1 className="text-[14px] font-[700]">Connect Socials</h1>
-                <TwitterLogin username={user.twitter_account} image={user.twitter_photo} />
+                <TwitterLogin
+                  username={user.twitter_account}
+                  image={user.twitter_photo}
+                />
                 <SpotifyButton username={user.spotify_account} />
                 {/* <TiktokLogin /> */}
               </VStack>
