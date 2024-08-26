@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Modal,
   ModalOverlay,
@@ -27,6 +27,47 @@ export default function Airdrop({ isOpen, onClose, onOpen }) {
   const navigate = useNavigate();
   const user = useSelector((state: AppState) => state.user.userInfo);
   // console.log(user);
+
+  const [accumulatedPoints, setAccumulatedPoints] = useState(0);
+  const pointsPerInterval = 0.015; // Points earned every 2 minutes
+  const intervalTime = 15000; // 15 seconds in milliseconds
+  const claimInterval = 3600000; // 1 hour in milliseconds
+  const [timeLeft, setTimeLeft] = useState(intervalTime / 1000); // Time left in seconds
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setAccumulatedPoints((prev) => prev + pointsPerInterval);
+      setTimeLeft(intervalTime / 1000); // Reset time left after claiming points
+    }, intervalTime);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  useEffect(() => {
+    const countdown = setInterval(() => {
+      setTimeLeft((prev) => (prev > 0 ? prev - 1 : 0));
+    }, 1000);
+
+    return () => clearInterval(countdown);
+  }, []);
+
+  const claimPoints = () => {
+    // Logic to claim points
+    const currentPoints =
+      Number(getFullDisplayBalance(formatNumber(user?.points))) || 0; // Get current points
+    const newPoints = currentPoints + accumulatedPoints; // Add accumulated points
+    console.log(`Claimed ${newPoints} LP points`);
+    setAccumulatedPoints(0); // Reset after claiming
+    setTimeLeft(intervalTime / 1000);
+  };
+
+  const handleClaim = () => {
+    if (accumulatedPoints > 0) {
+      claimPoints();
+    } else {
+      console.log("No points to claim");
+    }
+  };
 
   return (
     <>
@@ -123,7 +164,7 @@ export default function Airdrop({ isOpen, onClose, onOpen }) {
                 <VStack w="full" pos="relative" gap="0" zIndex={22}>
                   <VStack w="full" align="flex-start" p="18px" gap="8px">
                     <Text fontWeight={500} fontSize={20} color={"white"}>
-                      100% filled
+                      00.{timeLeft}
                     </Text>
                     <Flex
                       w="full"
@@ -134,7 +175,7 @@ export default function Airdrop({ isOpen, onClose, onOpen }) {
                       <Flex align={"center"} gap="8px">
                         <Image src="/coin-1.svg" w="48px" h="48px" />
                         <Text fontWeight={800} fontSize={24} color="white">
-                          {getFullDisplayBalance(formatNumber(user?.points))}
+                          {accumulatedPoints.toFixed(3)}
                         </Text>
                       </Flex>
                       <Button
@@ -145,6 +186,7 @@ export default function Airdrop({ isOpen, onClose, onOpen }) {
                         py="24px"
                         color="white"
                         _hover={{ bg: "blackAlpha.500" }}
+                        onClick={handleClaim}
                       >
                         Claim LP
                       </Button>
@@ -177,7 +219,7 @@ export default function Airdrop({ isOpen, onClose, onOpen }) {
                       py="10px"
                       fontSize={12}
                     >
-                      0.015 LO/2 mins
+                      0.015 LP/15 sec
                     </Box>
                   </Flex>
                 </VStack>
