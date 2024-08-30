@@ -201,7 +201,7 @@ export default function Airdrop({ isOpen, onClose, onOpen }) {
                 <VStack w="full" pos="relative" gap="0" zIndex={22}>
                   <VStack w="full" align="flex-start" p="18px" gap="8px">
                     <Text fontWeight={500} fontSize={20} color={"white"}>
-                      {percentageFilled ? percentageFilled + "%" : "0%"} filled
+                      {user ? percentageFilled + "%" : "0%"} filled
                     </Text>
                     <Flex
                       w="full"
@@ -212,7 +212,7 @@ export default function Airdrop({ isOpen, onClose, onOpen }) {
                       <Flex align={"center"} gap="8px">
                         <Image src="/coin-1.svg" w="48px" h="48px" />
                         <Text fontWeight={800} fontSize={24} color="white">
-                          {userCurrentPoint ? userCurrentPoint : "0.00"}
+                          {user ? userCurrentPoint : "0.00"}
                         </Text>
                       </Flex>
                       <Button
@@ -245,7 +245,7 @@ export default function Airdrop({ isOpen, onClose, onOpen }) {
                       <Flex align={"center"} gap="8px">
                         <Image src="/coin-1.svg" w="24px" h="24px" />
                         <Text fontWeight={500} fontSize={14} color="white">
-                          {formatUserPointBalance(user?.points) || "0.00"}
+                          {user ? formatUserPointBalance(user?.points) : "0.00"}
                         </Text>
                       </Flex>
                     </Flex>
