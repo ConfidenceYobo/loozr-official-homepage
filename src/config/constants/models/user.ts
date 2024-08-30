@@ -20,6 +20,8 @@ export interface UserJsonProps {
   spotify_account?: string;
   tiktok_account?: string;
   twitter_photo?: any;
+  points?: any;
+  last_claim_time?: any;
 }
 
 export interface UserProps {
@@ -43,6 +45,8 @@ export interface UserProps {
   spotify_account?: string;
   tiktok_account?: string;
   twitter_photo?: any;
+  points?: any;
+  last_claim_time?: any;
 }
 
 export default class User implements Model {
@@ -68,6 +72,7 @@ export default class User implements Model {
   tiktok_account?: string;
   twitter_photo?: any;
   points?: any;
+  last_claim_time?: any;
 
   constructor({
     username,
@@ -86,6 +91,8 @@ export default class User implements Model {
     isArtist,
     email,
     photo,
+    points,
+    last_claim_time,
   }: UserProps) {
     this.username = username;
     this.accountPrincipal = accountPrincipal;
@@ -103,6 +110,8 @@ export default class User implements Model {
     this.isArtist = isArtist;
     this.email = email;
     this.photo = photo;
+    this.points = points;
+    this.last_claim_time = last_claim_time;
   }
 
   get accountType() {
@@ -135,6 +144,7 @@ export default class User implements Model {
     this.tiktok_account = jsonData["tiktok_account"];
     this.twitter_photo = jsonData["twitter_photo"];
     this.points = jsonData["points"];
+    this.last_claim_time = jsonData["last_claim_time"];
   }
 
   get profileColor() {
@@ -170,6 +180,8 @@ export default class User implements Model {
       is_artist: this.isArtist,
       email: this.email,
       photo: this.photo,
+      points: this.points,
+      last_claim_time: this.last_claim_time,
     };
 
     return map;

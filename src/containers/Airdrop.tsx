@@ -13,8 +13,11 @@ import {
   Button,
 } from "@chakra-ui/react";
 import { ChevronRightOutlined } from "@mui/icons-material";
+import { useDispatch, useSelector } from "react-redux";
+import Twitter from "../assets/twitter.svg";
+import Tiktok from "../assets/tiktok.svg";
+import Spotify from "../assets/spotify.svg";
 import SpotifyButton from "../components/AirdropConnectSocial/Spotify";
-import { useSelector } from "react-redux";
 import { AppState } from "../state/store";
 import { textTruncate } from "../utils/textTruncate";
 import { useNavigate } from "react-router-dom";
@@ -22,52 +25,84 @@ import Photo from "../components/Photo";
 import TiktokLogin from "../components/AirdropConnectSocial/Tiktok";
 import TwitterLogin from "../components/AirdropConnectSocial/Twitter";
 import { formatNumber, getFullDisplayBalance } from "../utils/formatBalance";
+import { toastHttpError } from "../utils/httpHelper";
+import { DateTime } from "luxon";
+import {
+  MAX_POINT,
+  POINT_PER_SECOND,
+  TOAST_OPTIONS,
+} from "../config/constants";
+import { getUserDetails } from "../state/user/userActions";
+import { useClaimPointCallback } from "../hooks/usePoints";
+import { toast } from "react-toastify";
 
 export default function Airdrop({ isOpen, onClose, onOpen }) {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [percentageFilled, setPointPercentage] = useState<string>("0");
+  const [userCurrentPoint, setCurrentPoint] = useState<string>("0.0");
+  const [isLoading, setLoading] = useState<boolean>(false);
   const user = useSelector((state: AppState) => state.user.userInfo);
-  // console.log(user);
+  const { handleClaimPointCall } = useClaimPointCallback();
 
-  const [accumulatedPoints, setAccumulatedPoints] = useState(0);
-  const pointsPerInterval = 0.015; // Points earned every 2 minutes
-  const intervalTime = 15000; // 15 seconds in milliseconds
-  const claimInterval = 3600000; // 1 hour in milliseconds
-  const [timeLeft, setTimeLeft] = useState(intervalTime / 1000); // Time left in seconds
+  const formatUserPointBalance = (points: string) => {
+    const balanceBN = getFullDisplayBalance(points);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setAccumulatedPoints((prev) => prev + pointsPerInterval);
-      setTimeLeft(intervalTime / 1000); // Reset time left after claiming points
-    }, intervalTime);
-
-    return () => clearInterval(interval);
-  }, []);
-
-  useEffect(() => {
-    const countdown = setInterval(() => {
-      setTimeLeft((prev) => (prev > 0 ? prev - 1 : 0));
-    }, 1000);
-
-    return () => clearInterval(countdown);
-  }, []);
-
-  const claimPoints = () => {
-    // Logic to claim points
-    const currentPoints =
-      Number(getFullDisplayBalance(formatNumber(user?.points))) || 0; // Get current points
-    const newPoints = currentPoints + accumulatedPoints; // Add accumulated points
-    console.log(`Claimed ${newPoints} LP points`);
-    setAccumulatedPoints(0); // Reset after claiming
-    setTimeLeft(intervalTime / 1000);
+    return formatNumber(Number(balanceBN), 2, 6);
   };
 
-  const handleClaim = () => {
-    if (accumulatedPoints > 0) {
-      claimPoints();
-    } else {
-      console.log("No points to claim");
+  const loadUserPoints = () => {
+    const currentTime = DateTime.now();
+    const lastClaimTimeNative = new Date(user.last_claim_time);
+    const lastClaimTime = DateTime.fromJSDate(lastClaimTimeNative);
+
+    const elapsedTime = currentTime.diff(lastClaimTime, "seconds");
+
+    let pointsEarned = elapsedTime.seconds * POINT_PER_SECOND;
+
+    if (pointsEarned >= MAX_POINT) {
+      pointsEarned = MAX_POINT;
+    }
+
+    setCurrentPoint(formatNumber(Number(pointsEarned), 2, 6));
+
+    const percentageEarned = (pointsEarned / MAX_POINT) * 100;
+    setPointPercentage(formatNumber(percentageEarned, 0, 2));
+  };
+
+  const claimPoint = async () => {
+    if (Number(userCurrentPoint) < MAX_POINT) {
+      toast.error("Can't claim points yet!", TOAST_OPTIONS);
+      return;
+    }
+    if (isLoading) {
+      return;
+    }
+    setLoading(true);
+    try {
+      await handleClaimPointCall();
+      setLoading(false);
+      toast.success("Points claimed!!!", TOAST_OPTIONS);
+      dispatch(getUserDetails(user.id));
+    } catch (err: any) {
+      setLoading(false);
+      toastHttpError(err);
     }
   };
+
+  useEffect(() => {
+    loadUserPoints();
+  }, [user]);
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      if (user) {
+        dispatch(getUserDetails(user.id));
+      }
+    }, 3000);
+
+    return () => clearInterval(intervalId);
+  }, [dispatch]);
 
   return (
     <>
@@ -164,7 +199,7 @@ export default function Airdrop({ isOpen, onClose, onOpen }) {
                 <VStack w="full" pos="relative" gap="0" zIndex={22}>
                   <VStack w="full" align="flex-start" p="18px" gap="8px">
                     <Text fontWeight={500} fontSize={20} color={"white"}>
-                      00.{timeLeft}
+                      {percentageFilled}% filled
                     </Text>
                     <Flex
                       w="full"
@@ -175,10 +210,12 @@ export default function Airdrop({ isOpen, onClose, onOpen }) {
                       <Flex align={"center"} gap="8px">
                         <Image src="/coin-1.svg" w="48px" h="48px" />
                         <Text fontWeight={800} fontSize={24} color="white">
-                          {accumulatedPoints.toFixed(3)}
+                          {userCurrentPoint}
                         </Text>
                       </Flex>
                       <Button
+                        isLoading={isLoading}
+                        onClick={() => claimPoint()}
                         variant="solid"
                         bg="blackAlpha.400"
                         rounded="full"
@@ -186,7 +223,6 @@ export default function Airdrop({ isOpen, onClose, onOpen }) {
                         py="24px"
                         color="white"
                         _hover={{ bg: "blackAlpha.500" }}
-                        onClick={handleClaim}
                       >
                         Claim LP
                       </Button>
@@ -207,7 +243,7 @@ export default function Airdrop({ isOpen, onClose, onOpen }) {
                       <Flex align={"center"} gap="8px">
                         <Image src="/coin-1.svg" w="24px" h="24px" />
                         <Text fontWeight={500} fontSize={14} color="white">
-                          {getFullDisplayBalance(formatNumber(user?.points))}
+                          {formatUserPointBalance(user.points)}
                         </Text>
                       </Flex>
                     </Flex>

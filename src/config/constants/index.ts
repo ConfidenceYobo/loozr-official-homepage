@@ -39,3 +39,6 @@ export const BASE_EXPLORER_URLS = {
   mainnet: 'https://explorer.near.org',
   testnet: 'https://explorer.testnet.near.org',
 }
+
+export const MAX_POINT = 0.015;
+export const POINT_PER_SECOND = 0.000125
