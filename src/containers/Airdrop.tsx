@@ -51,7 +51,7 @@ export default function Airdrop({ isOpen, onClose, onOpen }) {
     return formatNumber(Number(balanceBN), 2, 6);
   };
 
-  const loadUserPoints = () => {
+  const loadPointsFromLastClaim = () => {
     const currentTime = DateTime.now();
     const lastClaimTimeNative = new Date(user.last_claim_time);
     const lastClaimTime = DateTime.fromJSDate(lastClaimTimeNative);
@@ -68,6 +68,16 @@ export default function Airdrop({ isOpen, onClose, onOpen }) {
 
     const percentageEarned = (pointsEarned / MAX_POINT) * 100;
     setPointPercentage(formatNumber(percentageEarned, 0, 2));
+  }
+
+  const loadUserPoints = () => {
+    loadPointsFromLastClaim();
+
+    const intervalId = setInterval(() => {
+      loadPointsFromLastClaim();
+    }, 2000);
+
+    return () => clearInterval(intervalId);
   };
 
   const claimPoint = async () => {
@@ -91,18 +101,10 @@ export default function Airdrop({ isOpen, onClose, onOpen }) {
   };
 
   useEffect(() => {
-    loadUserPoints();
+    const cleanup = loadUserPoints();
+
+    return cleanup;
   }, [user]);
-
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      if (user) {
-        dispatch(getUserDetails(user.id));
-      }
-    }, 3000);
-
-    return () => clearInterval(intervalId);
-  }, [dispatch]);
 
   return (
     <>
