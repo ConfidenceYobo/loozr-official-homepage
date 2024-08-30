@@ -53,7 +53,7 @@ export default function Airdrop({ isOpen, onClose, onOpen }) {
 
   const loadPointsFromLastClaim = () => {
     const currentTime = DateTime.now();
-    const lastClaimTimeNative = new Date(user.last_claim_time);
+    const lastClaimTimeNative = new Date(user?.last_claim_time);
     const lastClaimTime = DateTime.fromJSDate(lastClaimTimeNative);
 
     const elapsedTime = currentTime.diff(lastClaimTime, "seconds");
@@ -201,7 +201,7 @@ export default function Airdrop({ isOpen, onClose, onOpen }) {
                 <VStack w="full" pos="relative" gap="0" zIndex={22}>
                   <VStack w="full" align="flex-start" p="18px" gap="8px">
                     <Text fontWeight={500} fontSize={20} color={"white"}>
-                      {percentageFilled}% filled
+                      {percentageFilled ? percentageFilled + "%" : "0%"} filled
                     </Text>
                     <Flex
                       w="full"
@@ -212,7 +212,7 @@ export default function Airdrop({ isOpen, onClose, onOpen }) {
                       <Flex align={"center"} gap="8px">
                         <Image src="/coin-1.svg" w="48px" h="48px" />
                         <Text fontWeight={800} fontSize={24} color="white">
-                          {userCurrentPoint}
+                          {userCurrentPoint ? userCurrentPoint : "0.00"}
                         </Text>
                       </Flex>
                       <Button
@@ -245,7 +245,7 @@ export default function Airdrop({ isOpen, onClose, onOpen }) {
                       <Flex align={"center"} gap="8px">
                         <Image src="/coin-1.svg" w="24px" h="24px" />
                         <Text fontWeight={500} fontSize={14} color="white">
-                          {formatUserPointBalance(user.points)}
+                          {formatUserPointBalance(user?.points) || "0.00"}
                         </Text>
                       </Flex>
                     </Flex>
@@ -265,10 +265,10 @@ export default function Airdrop({ isOpen, onClose, onOpen }) {
               <VStack w="full" gap="16px" align="left">
                 <h1 className="text-[14px] font-[700]">Connect Socials</h1>
                 <TwitterLogin
-                  username={user.twitter_account}
-                  image={user.twitter_photo}
+                  username={user?.twitter_account}
+                  image={user?.twitter_photo}
                 />
-                <SpotifyButton username={user.spotify_account} />
+                <SpotifyButton username={user?.spotify_account} />
                 {/* <TiktokLogin /> */}
               </VStack>
             </VStack>
