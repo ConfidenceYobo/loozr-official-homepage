@@ -21,7 +21,7 @@ const Wallet = () => {
   const navigate = useNavigate();
   const [active, setActive] = useState(1);
   const user = useSelector((state: AppState) => state.user.userInfo);
-  const lzrAccountId = `${user.accountPrincipal}.${MIXER_ACCOUNT}`;
+  const lzrAccountId = `${user.accountPrincipal}`;
   const [balanceInLzr, setLZRBalance] = useState("0.00");
   const [balanceUsd, setBalanceUSD] = useState("0.00");
 
