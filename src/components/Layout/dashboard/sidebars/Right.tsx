@@ -5,7 +5,7 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import { useLocation, useNavigate } from "react-router-dom";
 import { LZR_IN_USD, MIXER_ACCOUNT } from "../../..//../config/constants";
 import { getLZRBalanceCallback } from "../../../../state/wallet/hooks/fetchBalance";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { AppState } from "../../../../state/store";
 import {
   formatBalanceUSD,
@@ -22,6 +22,7 @@ import Marquee from "react-fast-marquee";
 import Photo from "../../../Photo";
 import { Input } from "@chakra-ui/react";
 import { ExpandMore } from "@mui/icons-material";
+import { logout } from "../../../../state/user/userReducer";
 
 export default function Right() {
   const xl = useMediaQuery("(min-width:1280px)");
@@ -29,6 +30,7 @@ export default function Right() {
   const md = useMediaQuery("(min-width:768px)");
   const { pathname } = useLocation();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const user = useSelector((state: AppState) => state.user.userInfo);
   const lzrAccountPrincipal = `${user?.accountPrincipal}`;
@@ -85,6 +87,10 @@ export default function Right() {
 
     loadLZRBalance(lzrAccountPrincipal);
   }, []);
+
+  const handleLogout = () => {
+    dispatch(logout());
+  };
 
   return (
     <>
@@ -205,6 +211,7 @@ export default function Right() {
                     <div
                       className="py-3 px-4 bg-dark-700 text-[12px]"
                       style={{ borderTop: "1px solid rgba(83, 96, 121, 0.2)" }}
+                      onClick={() => handleLogout()}
                     >
                       Log out
                     </div>
