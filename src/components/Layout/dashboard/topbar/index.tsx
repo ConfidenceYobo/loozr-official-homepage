@@ -25,7 +25,7 @@ export const TopBar = () => {
   const { pathname } = useLocation();
   const dispatch = useDispatch();
   const user = useSelector((state: AppState) => state.user.userInfo);
-  const lzrAccountId = `${user?.accountId}.${MIXER_ACCOUNT}`;
+  const lzrAccountPrincipal = `${user?.accountPrincipal}`;
   const { handleBecomeArtiste } = useBecomeArtisteCallback();
   const [searchValue, setSearchValue] = React.useState("")
   const [balanceInLzr, setLZRBalance] = useState("0.00");
@@ -35,10 +35,10 @@ export const TopBar = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
 
   useEffect(() => {
-    const loadLZRBalance = async (accountId: string) => {
+    const loadLZRBalance = async (accountPrincipal: string) => {
       const { handleGetLZRBalanace } = getLZRBalanceCallback();
       try {
-        const result = await handleGetLZRBalanace(accountId);
+        const result = await handleGetLZRBalanace(accountPrincipal);
         const balanceResult = result;
         const balanceBN = getFullDisplayBalance(balanceResult);
 
@@ -49,7 +49,7 @@ export const TopBar = () => {
       }
     };
 
-    loadLZRBalance(lzrAccountId);
+    loadLZRBalance(lzrAccountPrincipal);
   }, []);
 
   const OnchangeHandler = async (item: any) => {
@@ -123,7 +123,7 @@ export const TopBar = () => {
               {searchValue && (
                 <div className=" absolute bg-[#12161F] top-[50px] overflow-y-auto max-h-[250px] z-[120] py-2 mt-2 rounded-lg px-4 w-full  ">
                   {data.map((item: any, index: any) => {
-                    const domainName = item.account_id + "." + MIXER_ACCOUNT;
+                    const domainName = item.accountPrincipal;
 
                     return (
                       <div
@@ -141,7 +141,7 @@ export const TopBar = () => {
                           <div className=" flex -mt-1 items-center ">
                             <p className=" text-[13px] font-semibold ">
                               {" "}
-                              {item?.account_id}
+                              {item?.accountPrincipal}
                             </p>
                           </div>
                           <div className=" flex -mt-1 items-center ">

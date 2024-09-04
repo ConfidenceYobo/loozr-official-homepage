@@ -33,17 +33,18 @@ import {
   TOAST_OPTIONS,
 } from "../config/constants";
 import { getUserDetails } from "../state/user/userActions";
-import { useClaimPointCallback } from "../hooks/usePoints";
+import { useClaimPointCallback, useMiningCallback } from "../hooks/usePoints";
 import { toast } from "react-toastify";
 
 export default function Airdrop({ isOpen, onClose, onOpen }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [percentageFilled, setPointPercentage] = useState<string>("0");
-  const [userCurrentPoint, setCurrentPoint] = useState<string>("0.0");
+  const [userCurrentPoint, setCurrentPoint] = useState<string>("0.00");
   const [isLoading, setLoading] = useState<boolean>(false);
   const user = useSelector((state: AppState) => state.user.userInfo);
   const { handleClaimPointCall } = useClaimPointCallback();
+  const { handleStartMiningCall } = useMiningCallback();
 
   const formatUserPointBalance = (points: string) => {
     const balanceBN = getFullDisplayBalance(points);
@@ -51,12 +52,13 @@ export default function Airdrop({ isOpen, onClose, onOpen }) {
     return formatNumber(Number(balanceBN), 2, 6);
   };
 
-  const loadPointsFromLastClaim = () => {
+  const loadPointsMining = () => {
+    if (!user.mining_start_time) return;
     const currentTime = DateTime.now();
-    const lastClaimTimeNative = new Date(user?.last_claim_time);
-    const lastClaimTime = DateTime.fromJSDate(lastClaimTimeNative);
+    const miningStartTimeNative = new Date(user.mining_start_time);
+    const miningStartTime = DateTime.fromJSDate(miningStartTimeNative);
 
-    const elapsedTime = currentTime.diff(lastClaimTime, "seconds");
+    const elapsedTime = currentTime.diff(miningStartTime, "seconds");
 
     let pointsEarned = elapsedTime.seconds * POINT_PER_SECOND;
 
@@ -68,14 +70,14 @@ export default function Airdrop({ isOpen, onClose, onOpen }) {
 
     const percentageEarned = (pointsEarned / MAX_POINT) * 100;
     setPointPercentage(formatNumber(percentageEarned, 0, 2));
-  }
+  };
 
   const loadUserPoints = () => {
-    loadPointsFromLastClaim();
+    loadPointsMining();
 
     const intervalId = setInterval(() => {
-      loadPointsFromLastClaim();
-    }, 2000);
+      loadPointsMining();
+    }, 800);
 
     return () => clearInterval(intervalId);
   };
@@ -92,7 +94,31 @@ export default function Airdrop({ isOpen, onClose, onOpen }) {
     try {
       await handleClaimPointCall();
       setLoading(false);
+
+      setCurrentPoint("0.00");
+      setPointPercentage("0");
+
       toast.success("Points claimed!!!", TOAST_OPTIONS);
+      dispatch(getUserDetails(user.id));
+    } catch (err: any) {
+      setLoading(false);
+      toastHttpError(err);
+    }
+  };
+
+  const startMining = async () => {
+    if (user.last_mining_status !== "ready") {
+      toast.error("Cannot start mining yet!", TOAST_OPTIONS);
+      return;
+    }
+    if (isLoading) {
+      return;
+    }
+    setLoading(true);
+    try {
+      await handleStartMiningCall();
+      setLoading(false);
+      toast.success("Mining Started!", TOAST_OPTIONS);
       dispatch(getUserDetails(user.id));
     } catch (err: any) {
       setLoading(false);
@@ -215,19 +241,35 @@ export default function Airdrop({ isOpen, onClose, onOpen }) {
                           {user ? userCurrentPoint : "0.00"}
                         </Text>
                       </Flex>
-                      <Button
-                        isLoading={isLoading}
-                        onClick={() => claimPoint()}
-                        variant="solid"
-                        bg="blackAlpha.400"
-                        rounded="full"
-                        px="28px"
-                        py="24px"
-                        color="white"
-                        _hover={{ bg: "blackAlpha.500" }}
-                      >
-                        Claim LP
-                      </Button>
+                      {user.last_mining_status === "ready" ? (
+                        <Button
+                          isLoading={isLoading}
+                          onClick={() => startMining()}
+                          variant="solid"
+                          bg="blackAlpha.400"
+                          rounded="full"
+                          px="28px"
+                          py="24px"
+                          color="white"
+                          _hover={{ bg: "blackAlpha.500" }}
+                        >
+                          Start Mining
+                        </Button>
+                      ) : (
+                        <Button
+                          isLoading={isLoading}
+                          onClick={() => claimPoint()}
+                          variant="solid"
+                          bg="blackAlpha.400"
+                          rounded="full"
+                          px="28px"
+                          py="24px"
+                          color="white"
+                          _hover={{ bg: "blackAlpha.500" }}
+                        >
+                          Claim LP
+                        </Button>
+                      )}
                     </Flex>
                   </VStack>
                   <Flex

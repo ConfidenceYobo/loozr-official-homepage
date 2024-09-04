@@ -57,7 +57,7 @@ export default function Sidebar({ isOpen, onClose }) {
                                     {searchValue && (
                                         <div className=" absolute bg-[#12161F] top-[50px] overflow-y-auto max-h-[250px] z-[120] py-2 mt-2 rounded-lg px-4 w-full  ">
                                             {data.map((item, index) => {
-                                                const domainName = item.account_id + "." + MIXER_ACCOUNT;
+                                                const domainName = item.accountPrincipal;
 
                                                 return (
                                                     <div
@@ -75,7 +75,7 @@ export default function Sidebar({ isOpen, onClose }) {
                                                             <div className=" flex -mt-1 items-center ">
                                                                 <p className=" text-[13px] font-semibold ">
                                                                     {" "}
-                                                                    {item?.account_id}
+                                                                    {item?.accountPrincipal}
                                                                 </p>
                                                             </div>
                                                             <div className=" flex -mt-1 items-center ">

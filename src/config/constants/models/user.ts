@@ -21,7 +21,8 @@ export interface UserJsonProps {
   tiktok_account?: string;
   twitter_photo?: any;
   points?: any;
-  last_claim_time?: any;
+  mining_start_time?: any;
+  last_mining_status?: any;
 }
 
 export interface UserProps {
@@ -46,7 +47,8 @@ export interface UserProps {
   tiktok_account?: string;
   twitter_photo?: any;
   points?: any;
-  last_claim_time?: any;
+  mining_start_time?: any;
+  last_mining_status?: any;
 }
 
 export default class User implements Model {
@@ -72,7 +74,8 @@ export default class User implements Model {
   tiktok_account?: string;
   twitter_photo?: any;
   points?: any;
-  last_claim_time?: any;
+  mining_start_time?: any;
+  last_mining_status?: any;
 
   constructor({
     username,
@@ -92,7 +95,8 @@ export default class User implements Model {
     email,
     photo,
     points,
-    last_claim_time,
+    mining_start_time,
+    last_mining_status,
   }: UserProps) {
     this.username = username;
     this.accountPrincipal = accountPrincipal;
@@ -111,7 +115,8 @@ export default class User implements Model {
     this.email = email;
     this.photo = photo;
     this.points = points;
-    this.last_claim_time = last_claim_time;
+    this.mining_start_time = mining_start_time;
+    this.last_mining_status = last_mining_status;
   }
 
   get accountType() {
@@ -144,7 +149,8 @@ export default class User implements Model {
     this.tiktok_account = jsonData["tiktok_account"];
     this.twitter_photo = jsonData["twitter_photo"];
     this.points = jsonData["points"];
-    this.last_claim_time = jsonData["last_claim_time"];
+    this.mining_start_time = jsonData["mining_start_time"];
+    this.last_mining_status = jsonData["last_mining_status"];
   }
 
   get profileColor() {
@@ -181,7 +187,8 @@ export default class User implements Model {
       email: this.email,
       photo: this.photo,
       points: this.points,
-      last_claim_time: this.last_claim_time,
+      mining_start_time: this.mining_start_time,
+      last_mining_status: this.last_mining_status,
     };
 
     return map;

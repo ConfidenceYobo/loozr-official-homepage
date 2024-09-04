@@ -11,3 +11,15 @@ export function useClaimPointCallback() {
   };
   return { handleClaimPointCall };
 }
+
+export function useMiningCallback() {
+  const handleStartMiningCall = async (): Promise<any> => {
+    const httpClient = new HttpClient();
+    const result = await httpClient.axiosInstance.post(
+      `/users/start-mining`,
+      {}
+    );
+    return result.data;
+  };
+  return { handleStartMiningCall };
+}
