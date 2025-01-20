@@ -22,7 +22,7 @@ const RenderTxHistory = (props) => {
         </div>
       ) : (
         props.dataList.map((hodler, index) => (
-          <TxHistoryCard key={index} hodler={hodler} coin={props.coin} txType="HOLDINGS" />
+          <TxHistoryCard key={index} hodler={hodler} coin={props.coin} coinCanister={props.tokenName} txType="HOLDINGS" />
         ))
       )}
     </div>
@@ -52,7 +52,7 @@ export default function CoinHodlers({ coin, user }: { coin: User; user: User }) 
         nextCursor={pagination.nextCursor}
         onSetCurrentCursor={() => dispatch(changePageForCoinHodlers())}
       >
-        <RenderTxHistory coin={coin.username} />
+        <RenderTxHistory coin={coin.username} tokenName={coin.tokenName} />
       </Pagination>
     </>
   );

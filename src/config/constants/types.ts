@@ -48,6 +48,7 @@ export interface Balance {
 export interface HodlerState {
   user: User;
   coin: string;
+  coinCanister?: string;
   coinId: number;
   balance?: Balance
 }

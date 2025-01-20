@@ -14,6 +14,7 @@ import share from "../assets/icons/share.svg";
 import chain from "../assets/icons/chain.png";
 import more from "../assets/icons/more.svg";
 import copy from "../assets/icons/copy.png";
+import { truncateAddress } from "../utils/textTruncate";
 import { abbrevNumber } from "../utils/formatBalance";
 import { getIndividualProfile } from "../state/user/userActions";
 import User from "../config/constants/models/user";
@@ -355,7 +356,7 @@ const Profile = (props) => {
                   )}
                 </div>
                 <div className=' bg-[#141922] px-2 rounded-[10px] flex gap-1 items-center'>
-                  <p className='font-medium text-[#536079] text-[12px] pl-[3px] '>0x1fAd...90dAe9F</p>
+                  <p className='font-medium text-[#536079] text-[12px] pl-[3px] '>{truncateAddress(currentProfile.accountDomain)}</p>
                   <button
                     onClick={() =>
                       copyToClipboard(currentProfile.accountDomain, "Copied!")
@@ -468,7 +469,7 @@ const Profile = (props) => {
                         {copySuccess === "Copied" ? copySuccess : "Copy profile link"}
                       </div>
                       {currentProfile.isArtist && currentProfile.tokenName && (
-                        <a className="py-3 px-4 text-[12px] cursor-pointer" style={{ borderTop: "1px solid rgba(83, 96, 121, 0.2)" }} target="_blank" rel="noreferrer" href={"https://explorer.testnet.near.org/accounts/" + currentProfile.accountDomain}>Artist on NEAR Explorer</a>
+                        <a className="py-3 px-4 text-[12px] cursor-pointer" style={{ borderTop: "1px solid rgba(83, 96, 121, 0.2)" }} target="_blank" rel="noreferrer" href={"https://ic.house/token/" + currentProfile.tokenName}>Artist on IC House Explorer</a>
                       )}
                       <div className="py-3 px-4 text-[12px] cursor-pointer" style={{ borderTop: "1px solid rgba(83, 96, 121, 0.2)" }} onClick={() => qrHandler()}>View profile QR code</div>
 

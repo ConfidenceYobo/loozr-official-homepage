@@ -27,7 +27,7 @@ export default function FeatureSection() {
                     </div>
                     <div className=' w-full ' > 
                         <p className=' txt font-bold mt-3 text-[20px] !text-[#0C0F15] leading-tight tracking-[0.3px] ' >Secure and scalable </p>
-                        <p className='wow txt !text-[14.7px] !font-normal mt-1  !text-[#0C0F15] tracking-[0.4px]  leading-normal ' >Transactions are carried out using the NEAR Protocol, a reliable and secure L1 with sharding support.</p>
+                        <p className='wow txt !text-[14.7px] !font-normal mt-1  !text-[#0C0F15] tracking-[0.4px]  leading-normal ' >Transactions are carried out using the ICP Blockchain, a reliable and secure L1 with sharding support.</p>
                     </div>
                     <div className=' w-full ' > 
                         <p className=' txt font-bold mt-3 text-[20px] !text-[#0C0F15] leading-tight tracking-[0.3px] ' >Launchpad for creators </p>
